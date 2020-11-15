@@ -169,7 +169,14 @@ insert into Takes values('rng@ubc.ca', 107, date '2020-09-07', 18.50);
 insert into Takes values('jdoe@gmail.com', 75, date '2020-09-27', 9.50);
 insert into Takes values('jdoe@gmail.com', 78, date '2020-10-04', 13.25);
 
-
+/*Process-Purchase-Membership Insertions*/
+insert into Process_Purchase_Membership values(1, 50, 'nathanyan@email.com', date '2020-02-12', 1, 184);
+insert into Process_Purchase_Membership values(2, 100, 'jdoe@gmail.com', date '2020-03-29', 2, 42);
+insert into Process_Purchase_Membership values(3, 50, 'rreynolds02@gmail.com', date '2020-05-08', 3, 21);
+insert into Process_Purchase_Membership values(4, 150, 'opwinfrey@email.com', date '2020-06-14', 4, 42);
+insert into Process_Purchase_Membership values(5, 200, 'kelly.smith@hotmail.com', date '2020-06-28', 5, 90);
+insert into Process_Purchase_Membership values(6, 100, 'rng@ubc.ca', date '2020-08-02', 6, 121);
+insert into Process_Purchase_Membership values(7, 50, 'eknorr@ubc.ca', date '2020-09-21', 7, 124); 
 
 insert into employee values(199, 'Greedy', 'Manager');
 
