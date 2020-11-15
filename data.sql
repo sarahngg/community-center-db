@@ -178,6 +178,20 @@ insert into Process_Purchase_Membership values(5, 200, 'kelly.smith@hotmail.com'
 insert into Process_Purchase_Membership values(6, 100, 'rng@ubc.ca', date '2020-08-02', 6, 121);
 insert into Process_Purchase_Membership values(7, 50, 'eknorr@ubc.ca', date '2020-09-21', 7, 124); 
 
+/*Class-Leads Insertions*/
+insert into Class_Leads values(105, date '2020-10-23', 0.30, "Lecture", "Food Safe 1", 50, 30);
+insert into Class_Leads values(105, date '2020-10-24', 0.30, "Lecture", "Food Safe 2", 50, 30);
+insert into Class_Leads values(232, date '2020-10-23', 0.10, "Training", "Intro to CPR", 25, 200);
+insert into Class_Leads values(232, date '2020-10-24', 0.10, "Training", "CPR Recertification", 25, 200);
+insert into Class_Leads values(167, date '2020-10-25', 0.30, "Lecture", "HTML/CSS Level 1", 50, 88);
+insert into Class_Leads values(78, date '2020-10-23', 0, "Hands-on", "Pottery: Beginners", 20, 65);
+insert into Class_Leads values(78, date '2020-10-30', 0, "Hands-on", "Pottery: Intermediate", 20, 65);
+insert into Class_Leads values(107, date '2020-10-23', 0.20, "Fitness", "Yoga", 15, 31);
+insert into Class_Leads values(111, date '2020-10-24', 0.20, "Fitness", "Pilates", 15, 31);
+insert into Class_Leads values(202, date '2020-10-25', 0, "Discussion", "English for New Canadians", 10, 144);
+insert into Class_Leads values(301, date '2020-10-26', 0.10, "Training", "Computer for Seniors", 25, 0);
+
+
 insert into employee values(199, 'Greedy', 'Manager');
 
 insert into pays_payment values(date '2019-01-01', 400, 199, 40.02);
