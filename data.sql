@@ -191,6 +191,9 @@ insert into Class_Leads values(111, date '2020-10-24', 0.20, "Fitness", "Pilates
 insert into Class_Leads values(202, date '2020-10-25', 0, "Discussion", "English for New Canadians", 10, 144);
 insert into Class_Leads values(301, date '2020-10-26', 0.10, "Training", "Computer for Seniors", 25, 0);
 
+/*Has_Room_Booking Insetions*/
+
+/*Workshop Insertions*/
 
 insert into employee values(199, 'Greedy', 'Manager');
 
