@@ -152,8 +152,15 @@ grant select on Pays_Payment to public;
 
 select table_name from user_tables;
  
-
+/*Customer Table Insertions*/
 insert into customer values('nathanyan@email.com', 'Nathan', 'Yan');
+insert into customer values('jdoe@gmail.com', 'John', 'Doe');
+insert into customer values('smithk@hotmail.com', 'Karen', 'Smith');
+insert into customer values('rreynolds02@gmail.com', 'Ryan', 'Reynolds');
+insert into customer values('opwinfrey@email.com', 'Oprah', 'Winfrey');
+insert into customer values('kelly.smith@hotmail.com', 'Kelly', 'Smith');
+insert into customer values('rng@ubc.ca', 'Raymond', 'Ng');
+insert into customer values('eknorr@ubc.ca', 'Ed', 'Knorr');
 
 insert into employee values(199, 'Greedy', 'Manager');
 
