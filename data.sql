@@ -153,14 +153,23 @@ grant select on Pays_Payment to public;
 select table_name from user_tables;
  
 /*Customer Table Insertions*/
-insert into customer values('nathanyan@email.com', 'Nathan', 'Yan');
-insert into customer values('jdoe@gmail.com', 'John', 'Doe');
-insert into customer values('smithk@hotmail.com', 'Karen', 'Smith');
-insert into customer values('rreynolds02@gmail.com', 'Ryan', 'Reynolds');
-insert into customer values('opwinfrey@email.com', 'Oprah', 'Winfrey');
-insert into customer values('kelly.smith@hotmail.com', 'Kelly', 'Smith');
-insert into customer values('rng@ubc.ca', 'Raymond', 'Ng');
-insert into customer values('eknorr@ubc.ca', 'Ed', 'Knorr');
+insert into Customer values('nathanyan@email.com', 'Nathan', 'Yan');
+insert into Customer values('jdoe@gmail.com', 'John', 'Doe');
+insert into Customer values('smithk@hotmail.com', 'Karen', 'Smith');
+insert into Customer values('rreynolds02@gmail.com', 'Ryan', 'Reynolds');
+insert into Customer values('opwinfrey@email.com', 'Oprah', 'Winfrey');
+insert into Customer values('kelly.smith@hotmail.com', 'Kelly', 'Smith');
+insert into Customer values('rng@ubc.ca', 'Raymond', 'Ng');
+insert into Customer values('eknorr@ubc.ca', 'Ed', 'Knorr');
+
+/*Takes Table Insertions*/
+insert into Takes values('smithk@hotmail.com', 105, date '2020-10-20', 12.00);
+insert into Takes values('rng@ubc.ca', 107, date '2020-09-05', 18.50);
+insert into Takes values('rng@ubc.ca', 107, date '2020-09-07', 18.50);
+insert into Takes values('jdoe@gmail.com', 75, date '2020-09-27', 9.50);
+insert into Takes values('jdoe@gmail.com', 78, date '2020-10-04', 13.25);
+
+
 
 insert into employee values(199, 'Greedy', 'Manager');
 
