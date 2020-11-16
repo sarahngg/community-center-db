@@ -194,7 +194,66 @@ insert into Class_Leads values(301, date '2020-10-26', 0.10, "Training", "Comput
 /*Has_Room_Booking Insetions*/
 
 /*Workshop Insertions*/
+insert into Workshop values(105, date "2020-10-23", "Food Safe Level 1", 79.99);
+insert into Workshop values(105, date "2020-10-24", "Food Safe Level 2", 99.99);
+insert into Workshop values(232, date "2020-10-23", "CPR Level A", 150.00);
+insert into Workshop values(232, date "2020-10-24", "CPR Level C", 150.00);
+insert into Workshop values(167, date "2020-10-25", "HTML/CSS Level 1", 50.00);
 
-insert into employee values(199, 'Greedy', 'Manager');
+/* Lesson Table Insertions */
+insert into Lesson values(78, date '2020-10-23', 18.50);
+insert into Lesson values(78, date '2020-10-30', 18.50);
+insert into Lesson values(107, date '2020-10-23', 25.00);
+insert into Lesson values(111, date '2020-10-24', 12.00);
+insert into Lesson values(202, date '2020-10-23', 0.00);
 
-insert into pays_payment values(date '2019-01-01', 400, 199, 40.02);
+/* Uses Table Insertions */
+insert into Uses values(78, date '2020-10-23', 26623);
+insert into Uses values(78, date '2020-10-30', 43241);
+insert into Uses values(105, date '2020-10-23', 11267);
+insert into Uses values(232, date '2020-10-24', 64671);
+insert into Uses values(202, date '2020-10-25', 64672);
+
+/* Orders_Equipment Table Insertions */
+insert into Orders_Equipment values(26623, 9.99, "Potter's Wheel", 280775733, 611, 184);
+insert into Orders_Equipment values(43241, 6.99, 'Kiln', 568349684, 112, 42);
+insert into Orders_Equipment values(11267, 12.99, 'Meat Thermometer', 928832138, 442, 21);
+insert into Orders_Equipment values(64671, 19.99, 'Large Exercise Mat', 212530810, 31, 90);
+insert into Orders_Equipment values(64672, 15.00, 'Kindle Reader', 831551818, 82, 121);
+
+/* Employee Table Insertions */
+insert into Employee values(184, 'Bob', 'Smith');
+insert into Employee values(42, 'Ronald', 'McDonald');
+insert into Employee values(21, 'Lisa', 'Simpson');
+insert into Employee values(90, 'Awkwa', 'Fina');
+insert into Employee values(121, 'Steve', 'Rogers');
+insert into Employee values(30, 'Homer', 'Simpson');
+insert into Employee values(31, 'Britney', 'Spears');
+insert into Employee values(88, 'Patrick', 'Star');
+insert into Employee values(65, 'Ash', 'Ketchum');
+insert into Employee values(144, 'Justin', 'Trudeau');
+insert into Employee values(199, 'Greedy', 'Manager');
+insert into Employee values(200, 'Anne', 'Rescue');
+
+/* Front_Desk_Staff Table Insertions */
+insert into Front_Desk_Staff values(184, 18.72);
+insert into Front_Desk_Staff values(42, 25.30);
+insert into Front_Desk_Staff values(21, 17.17);
+insert into Front_Desk_Staff values(90, 24.30);
+insert into Front_Desk_Staff values(121, 23.10);
+
+/* Instructor Table Insertions */
+insert into Instructor values(30, 32.33, 'Culinary');
+insert into Instructor values(31, 29.00, 'Yoga');
+insert into Instructor values(88, 38.53, 'IT & Web Development');
+insert into Instructor values(65, 34.05, 'Pottery');
+insert into Instructor values(200, 50.21, 'CPR');
+insert into Instructor values(144, 26.27, 'English');
+
+/* Pays_Payment Table Insertions */
+insert into Pays_Payment values(date '2020-09-30', 432, 30, 323.30);
+insert into Pays_Payment values(date '2020-10-30', 433, 31, 290.00);
+insert into Pays_Payment values(date '2020-10-30', 434, 88, 385.30);
+insert into Pays_Payment values(date '2020-10-30', 435, 65, 340.50);
+insert into Pays_Payment values(date '2020-10-30', 436, 121, 2310.30);
+insert into Pays_Payment values(date '2020-11-15', 437, 65, 202.10);
