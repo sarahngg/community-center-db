@@ -151,16 +151,6 @@ CREATE TABLE Pays_Payment (
 grant select on Pays_Payment to public;
 
 select table_name from user_tables;
- 
-/*Customer Table Insertions*/
-insert into Customer values('nathanyan@email.com', 'Nathan', 'Yan');
-insert into Customer values('jdoe@gmail.com', 'John', 'Doe');
-insert into Customer values('smithk@hotmail.com', 'Karen', 'Smith');
-insert into Customer values('rreynolds02@gmail.com', 'Ryan', 'Reynolds');
-insert into Customer values('opwinfrey@email.com', 'Oprah', 'Winfrey');
-insert into Customer values('kelly.smith@hotmail.com', 'Kelly', 'Smith');
-insert into Customer values('rng@ubc.ca', 'Raymond', 'Ng');
-insert into Customer values('eknorr@ubc.ca', 'Ed', 'Knorr');
 
 /* Employee Table Insertions */
 insert into Employee values(184, 'Bob', 'Smith');
@@ -175,6 +165,21 @@ insert into Employee values(65, 'Ash', 'Ketchum');
 insert into Employee values(144, 'Justin', 'Trudeau');
 insert into Employee values(199, 'Greedy', 'Manager');
 insert into Employee values(200, 'Anne', 'Rescue');
+
+/* Front_Desk_Staff Table Insertions */
+insert into Front_Desk_Staff values(184, 18.72);
+insert into Front_Desk_Staff values(42, 25.30);
+insert into Front_Desk_Staff values(21, 17.17);
+insert into Front_Desk_Staff values(90, 24.30);
+insert into Front_Desk_Staff values(121, 23.10);
+
+/* Instructor Table Insertions */
+insert into Instructor values(30, 32.33, 'Culinary');
+insert into Instructor values(31, 29.00, 'Yoga');
+insert into Instructor values(88, 38.53, 'IT & Web Development');
+insert into Instructor values(65, 34.05, 'Pottery');
+insert into Instructor values(200, 50.21, 'CPR');
+insert into Instructor values(144, 26.27, 'English');
 
 /*Class-Leads Insertions*/
 insert into Class_Leads values(105, date '2020-10-23', 0.30, "Lecture", "Food Safe 1", 50, 30);
@@ -196,6 +201,24 @@ insert into Orders_Equipment values(11267, 12.99, 'Meat Thermometer', 928832138,
 insert into Orders_Equipment values(64671, 19.99, 'Large Exercise Mat', 212530810, 31, 90);
 insert into Orders_Equipment values(64672, 15.00, 'Kindle Reader', 831551818, 82, 121);
 
+/* Pays_Payment Table Insertions */
+insert into Pays_Payment values(date '2020-09-30', 432, 30, 323.30);
+insert into Pays_Payment values(date '2020-10-30', 433, 31, 290.00);
+insert into Pays_Payment values(date '2020-10-30', 434, 88, 385.30);
+insert into Pays_Payment values(date '2020-10-30', 435, 65, 340.50);
+insert into Pays_Payment values(date '2020-10-30', 436, 121, 2310.30);
+insert into Pays_Payment values(date '2020-11-15', 437, 65, 202.10);
+
+/*Customer Table Insertions*/
+insert into Customer values('nathanyan@email.com', 'Nathan', 'Yan');
+insert into Customer values('jdoe@gmail.com', 'John', 'Doe');
+insert into Customer values('smithk@hotmail.com', 'Karen', 'Smith');
+insert into Customer values('rreynolds02@gmail.com', 'Ryan', 'Reynolds');
+insert into Customer values('opwinfrey@email.com', 'Oprah', 'Winfrey');
+insert into Customer values('kelly.smith@hotmail.com', 'Kelly', 'Smith');
+insert into Customer values('rng@ubc.ca', 'Raymond', 'Ng');
+insert into Customer values('eknorr@ubc.ca', 'Ed', 'Knorr');
+
 /*Takes Table Insertions*/
 insert into Takes values('smithk@hotmail.com', 105, date '2020-10-20', 12.00);
 insert into Takes values('rng@ubc.ca', 107, date '2020-09-05', 18.50);
@@ -211,19 +234,6 @@ insert into Process_Purchase_Membership values(4, 150, 'opwinfrey@email.com', da
 insert into Process_Purchase_Membership values(5, 200, 'kelly.smith@hotmail.com', date '2020-06-28', 5, 90);
 insert into Process_Purchase_Membership values(6, 100, 'rng@ubc.ca', date '2020-08-02', 6, 121);
 insert into Process_Purchase_Membership values(7, 50, 'eknorr@ubc.ca', date '2020-09-21', 7, 124); 
-
-/*Has_Room_Booking Insetions*/
-insert into Has_Room_Booking values(4, timestamp('2020-10-23 14:00:00'), 105, date "2020-10-23");
-insert into Has_Room_Booking values(4, timestamp('2020-10-23 15:00:00'), 105, date "2020-10-23");
-insert into Has_Room_Booking values(4, timestamp('2020-10-23 16:00:00'), 105, date "2020-10-23");
-insert into Has_Room_Booking values(4, timestamp('2020-10-23 14:00:00'), 105, date "2020-10-24");
-insert into Has_Room_Booking values(4, timestamp('2020-10-23 15:00:00'), 105, date "2020-10-24");
-insert into Has_Room_Booking values(4, timestamp('2020-10-23 16:00:00'), 105, date "2020-10-24");
-insert into Has_Room_Booking values(4, timestamp('2020-10-23 17:00:00'), NULL, NULL);
-insert into Has_Room_Booking values(11, timestamp('2020-10-23 14:00:00'), 75, date "2020-10-23");
-insert into Has_Room_Booking values(2, timestamp('2020-10-23 10:00:00'), 78, date "2020-10-23");
-insert into Has_Room_Booking values(2, timestamp('2020-10-30 10:00:00'), 78, date "2020-10-30");
-insert into Has_Room_Booking values(5, timestamp('2020-10-23 16:00:00'), 107, date "2020-10-23");
 
 /*Workshop Insertions*/
 insert into Workshop values(105, date "2020-10-23", "Food Safe Level 1", 79.99);
@@ -246,25 +256,15 @@ insert into Uses values(105, date '2020-10-23', 11267);
 insert into Uses values(232, date '2020-10-24', 64671);
 insert into Uses values(202, date '2020-10-25', 64672);
 
-/* Front_Desk_Staff Table Insertions */
-insert into Front_Desk_Staff values(184, 18.72);
-insert into Front_Desk_Staff values(42, 25.30);
-insert into Front_Desk_Staff values(21, 17.17);
-insert into Front_Desk_Staff values(90, 24.30);
-insert into Front_Desk_Staff values(121, 23.10);
-
-/* Instructor Table Insertions */
-insert into Instructor values(30, 32.33, 'Culinary');
-insert into Instructor values(31, 29.00, 'Yoga');
-insert into Instructor values(88, 38.53, 'IT & Web Development');
-insert into Instructor values(65, 34.05, 'Pottery');
-insert into Instructor values(200, 50.21, 'CPR');
-insert into Instructor values(144, 26.27, 'English');
-
-/* Pays_Payment Table Insertions */
-insert into Pays_Payment values(date '2020-09-30', 432, 30, 323.30);
-insert into Pays_Payment values(date '2020-10-30', 433, 31, 290.00);
-insert into Pays_Payment values(date '2020-10-30', 434, 88, 385.30);
-insert into Pays_Payment values(date '2020-10-30', 435, 65, 340.50);
-insert into Pays_Payment values(date '2020-10-30', 436, 121, 2310.30);
-insert into Pays_Payment values(date '2020-11-15', 437, 65, 202.10);
+/*Has_Room_Booking Insetions*/
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 14:00:00'), 105, date "2020-10-23");
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 15:00:00'), 105, date "2020-10-23");
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 16:00:00'), 105, date "2020-10-23");
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 14:00:00'), 105, date "2020-10-24");
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 15:00:00'), 105, date "2020-10-24");
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 16:00:00'), 105, date "2020-10-24");
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 17:00:00'), NULL, NULL);
+insert into Has_Room_Booking values(11, timestamp('2020-10-23 14:00:00'), 75, date "2020-10-23");
+insert into Has_Room_Booking values(2, timestamp('2020-10-23 10:00:00'), 78, date "2020-10-23");
+insert into Has_Room_Booking values(2, timestamp('2020-10-30 10:00:00'), 78, date "2020-10-30");
+insert into Has_Room_Booking values(5, timestamp('2020-10-23 16:00:00'), 107, date "2020-10-23");
