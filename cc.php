@@ -67,8 +67,8 @@
         </form>
         <hr />
 
-        <h2>Display the Tuples in DemoTable</h2>
-        <form method="GET" action="oracle-test.php"> <!--refresh page when submitted-->
+        <h2>Display the Tuples in Employee</h2>
+        <form method="GET" action="cc.php"> <!--refresh page when submitted-->
             <input type="hidden" id="displayTupleRequest" name="displayTupleRequest">
             <input type="submit" name="displayTuples"></p>
         </form>
@@ -149,12 +149,11 @@
         }
 
         function printResult($result) { //prints results from a select statement
-            echo "<br>Retrieved data from table demoTable:<br>";
+            echo "<br>Retrieved data from table Employee:<br>";
             echo "<table>";
-            echo "<tr><th>ID</th><th>Name</th></tr>";
-
-            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]" 
+            echo "<tr><th>eID</th><th>firstName</th><th>lastName</th></tr>";
+            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
+                echo "<tr><td>" . $row["EID"] . "</td><td>" . $row["FIRSTNAME"] . "</td><td>" . $row["LASTNAME"] . "</td></tr>"; //or just use "echo $row[0]"; 
             }
 
             echo "</table>";
@@ -237,7 +236,8 @@
 
         function handleDisplayRequest() {
             global $db_conn;
-            $result = executePlainSQL("SELECT * FROM demoTable");
+            $result = executePlainSQL("SELECT * FROM Employee");
+            console.log($result);
             printResult($result);
         }
 
