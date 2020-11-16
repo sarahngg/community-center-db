@@ -192,6 +192,17 @@ insert into Class_Leads values(202, date '2020-10-25', 0, "Discussion", "English
 insert into Class_Leads values(301, date '2020-10-26', 0.10, "Training", "Computer for Seniors", 25, 0);
 
 /*Has_Room_Booking Insetions*/
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 14:00:00'), 105, date "2020-10-23");
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 15:00:00'), 105, date "2020-10-23");
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 16:00:00'), 105, date "2020-10-23");
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 14:00:00'), 105, date "2020-10-24");
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 15:00:00'), 105, date "2020-10-24");
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 16:00:00'), 105, date "2020-10-24");
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 17:00:00'), NULL, NULL);
+insert into Has_Room_Booking values(11, timestamp('2020-10-23 14:00:00'), 75, date "2020-10-23");
+insert into Has_Room_Booking values(2, timestamp('2020-10-23 10:00:00'), 78, date "2020-10-23");
+insert into Has_Room_Booking values(2, timestamp('2020-10-30 10:00:00'), 78, date "2020-10-30");
+insert into Has_Room_Booking values(5, timestamp('2020-10-23 16:00:00'), 107, date "2020-10-23");
 
 /*Workshop Insertions*/
 insert into Workshop values(105, date "2020-10-23", "Food Safe Level 1", 79.99);
