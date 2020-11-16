@@ -1,3 +1,5 @@
+
+
 <!--Test Oracle file for UBC CPSC304 2018 Winter Term 1
   Created by Jiemin Zhang
   Modified by Simona Radu
@@ -18,14 +20,14 @@
 
   <html>
     <head>
-        <title>CPSC 304 PHP/Oracle Demonstration</title>
+        <title>CPSC 304 Community Centre Database</title>
     </head>
 
     <body>
         <h2>Reset</h2>
         <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
 
-        <form method="POST" action="oracle-test.php">
+        <form method="POST" action="cc.php">
             <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
             <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
             <p><input type="submit" value="Reset" name="reset"></p>
@@ -33,11 +35,12 @@
 
         <hr />
 
-        <h2>Insert Values into DemoTable</h2>
-        <form method="POST" action="oracle-test.php"> <!--refresh page when submitted-->
+        <h2>Insert Values into Employee</h2>
+        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-            Number: <input type="text" name="insNo"> <br /><br />
-            Name: <input type="text" name="insName"> <br /><br />
+            Employee ID: <input type="number" min="0" step="1" name="eID"> <br /><br />
+            First Name: <input type="text" name="firstName"> <br /><br />
+            Last Name: <input type="text" name="lastName"> <br /><br />
 
             <input type="submit" value="Insert" name="insertSubmit"></p>
         </form>
@@ -47,7 +50,7 @@
         <h2>Update Name in DemoTable</h2>
         <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
-        <form method="POST" action="oracle-test.php"> <!--refresh page when submitted-->
+        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
             <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
             Old Name: <input type="text" name="oldName"> <br /><br />
             New Name: <input type="text" name="newName"> <br /><br />
@@ -58,11 +61,10 @@
         <hr />
 
         <h2>Count the Tuples in DemoTable</h2>
-        <form method="GET" action="oracle-test.php"> <!--refresh page when submitted-->
+        <form method="GET" action="cc.php"> <!--refresh page when submitted-->
             <input type="hidden" id="countTupleRequest" name="countTupleRequest">
             <input type="submit" name="countTuples"></p>
         </form>
-
         <hr />
 
         <h2>Display the Tuples in DemoTable</h2>
@@ -210,15 +212,16 @@
 
             //Getting the values from user and insert data into the table
             $tuple = array (
-                ":bind1" => $_POST['insNo'],
-                ":bind2" => $_POST['insName']
+                ":bind1" => $_POST['eID'],
+                ":bind2" => $_POST['firstName'],
+                ":bind3" => $_POST['lastName']
             );
 
             $alltuples = array (
                 $tuple
             );
 
-            executeBoundSQL("insert into demoTable values (:bind1, :bind2)", $alltuples);
+            executeBoundSQL("INSERT INTO Employee VALUES (:bind1, :bind2, :bind3)", $alltuples);
             OCICommit($db_conn);
         }
 
