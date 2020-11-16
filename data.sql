@@ -162,6 +162,40 @@ insert into Customer values('kelly.smith@hotmail.com', 'Kelly', 'Smith');
 insert into Customer values('rng@ubc.ca', 'Raymond', 'Ng');
 insert into Customer values('eknorr@ubc.ca', 'Ed', 'Knorr');
 
+/* Employee Table Insertions */
+insert into Employee values(184, 'Bob', 'Smith');
+insert into Employee values(42, 'Ronald', 'McDonald');
+insert into Employee values(21, 'Lisa', 'Simpson');
+insert into Employee values(90, 'Awkwa', 'Fina');
+insert into Employee values(121, 'Steve', 'Rogers');
+insert into Employee values(30, 'Homer', 'Simpson');
+insert into Employee values(31, 'Britney', 'Spears');
+insert into Employee values(88, 'Patrick', 'Star');
+insert into Employee values(65, 'Ash', 'Ketchum');
+insert into Employee values(144, 'Justin', 'Trudeau');
+insert into Employee values(199, 'Greedy', 'Manager');
+insert into Employee values(200, 'Anne', 'Rescue');
+
+/*Class-Leads Insertions*/
+insert into Class_Leads values(105, date '2020-10-23', 0.30, "Lecture", "Food Safe 1", 50, 30);
+insert into Class_Leads values(105, date '2020-10-24', 0.30, "Lecture", "Food Safe 2", 50, 30);
+insert into Class_Leads values(232, date '2020-10-23', 0.10, "Training", "Intro to CPR", 25, 200);
+insert into Class_Leads values(232, date '2020-10-24', 0.10, "Training", "CPR Recertification", 25, 200);
+insert into Class_Leads values(167, date '2020-10-25', 0.30, "Lecture", "HTML/CSS Level 1", 50, 88);
+insert into Class_Leads values(78, date '2020-10-23', 0, "Hands-on", "Pottery: Beginners", 20, 65);
+insert into Class_Leads values(78, date '2020-10-30', 0, "Hands-on", "Pottery: Intermediate", 20, 65);
+insert into Class_Leads values(107, date '2020-10-23', 0.20, "Fitness", "Yoga", 15, 31);
+insert into Class_Leads values(111, date '2020-10-24', 0.20, "Fitness", "Pilates", 15, 31);
+insert into Class_Leads values(202, date '2020-10-25', 0, "Discussion", "English for New Canadians", 10, 144);
+insert into Class_Leads values(301, date '2020-10-26', 0.10, "Training", "Computer for Seniors", 25, 0);
+
+/* Orders_Equipment Table Insertions */
+insert into Orders_Equipment values(26623, 9.99, "Potter's Wheel", 280775733, 611, 184);
+insert into Orders_Equipment values(43241, 6.99, 'Kiln', 568349684, 112, 42);
+insert into Orders_Equipment values(11267, 12.99, 'Meat Thermometer', 928832138, 442, 21);
+insert into Orders_Equipment values(64671, 19.99, 'Large Exercise Mat', 212530810, 31, 90);
+insert into Orders_Equipment values(64672, 15.00, 'Kindle Reader', 831551818, 82, 121);
+
 /*Takes Table Insertions*/
 insert into Takes values('smithk@hotmail.com', 105, date '2020-10-20', 12.00);
 insert into Takes values('rng@ubc.ca', 107, date '2020-09-05', 18.50);
@@ -177,19 +211,6 @@ insert into Process_Purchase_Membership values(4, 150, 'opwinfrey@email.com', da
 insert into Process_Purchase_Membership values(5, 200, 'kelly.smith@hotmail.com', date '2020-06-28', 5, 90);
 insert into Process_Purchase_Membership values(6, 100, 'rng@ubc.ca', date '2020-08-02', 6, 121);
 insert into Process_Purchase_Membership values(7, 50, 'eknorr@ubc.ca', date '2020-09-21', 7, 124); 
-
-/*Class-Leads Insertions*/
-insert into Class_Leads values(105, date '2020-10-23', 0.30, "Lecture", "Food Safe 1", 50, 30);
-insert into Class_Leads values(105, date '2020-10-24', 0.30, "Lecture", "Food Safe 2", 50, 30);
-insert into Class_Leads values(232, date '2020-10-23', 0.10, "Training", "Intro to CPR", 25, 200);
-insert into Class_Leads values(232, date '2020-10-24', 0.10, "Training", "CPR Recertification", 25, 200);
-insert into Class_Leads values(167, date '2020-10-25', 0.30, "Lecture", "HTML/CSS Level 1", 50, 88);
-insert into Class_Leads values(78, date '2020-10-23', 0, "Hands-on", "Pottery: Beginners", 20, 65);
-insert into Class_Leads values(78, date '2020-10-30', 0, "Hands-on", "Pottery: Intermediate", 20, 65);
-insert into Class_Leads values(107, date '2020-10-23', 0.20, "Fitness", "Yoga", 15, 31);
-insert into Class_Leads values(111, date '2020-10-24', 0.20, "Fitness", "Pilates", 15, 31);
-insert into Class_Leads values(202, date '2020-10-25', 0, "Discussion", "English for New Canadians", 10, 144);
-insert into Class_Leads values(301, date '2020-10-26', 0.10, "Training", "Computer for Seniors", 25, 0);
 
 /*Has_Room_Booking Insetions*/
 insert into Has_Room_Booking values(4, timestamp('2020-10-23 14:00:00'), 105, date "2020-10-23");
@@ -224,27 +245,6 @@ insert into Uses values(78, date '2020-10-30', 43241);
 insert into Uses values(105, date '2020-10-23', 11267);
 insert into Uses values(232, date '2020-10-24', 64671);
 insert into Uses values(202, date '2020-10-25', 64672);
-
-/* Orders_Equipment Table Insertions */
-insert into Orders_Equipment values(26623, 9.99, "Potter's Wheel", 280775733, 611, 184);
-insert into Orders_Equipment values(43241, 6.99, 'Kiln', 568349684, 112, 42);
-insert into Orders_Equipment values(11267, 12.99, 'Meat Thermometer', 928832138, 442, 21);
-insert into Orders_Equipment values(64671, 19.99, 'Large Exercise Mat', 212530810, 31, 90);
-insert into Orders_Equipment values(64672, 15.00, 'Kindle Reader', 831551818, 82, 121);
-
-/* Employee Table Insertions */
-insert into Employee values(184, 'Bob', 'Smith');
-insert into Employee values(42, 'Ronald', 'McDonald');
-insert into Employee values(21, 'Lisa', 'Simpson');
-insert into Employee values(90, 'Awkwa', 'Fina');
-insert into Employee values(121, 'Steve', 'Rogers');
-insert into Employee values(30, 'Homer', 'Simpson');
-insert into Employee values(31, 'Britney', 'Spears');
-insert into Employee values(88, 'Patrick', 'Star');
-insert into Employee values(65, 'Ash', 'Ketchum');
-insert into Employee values(144, 'Justin', 'Trudeau');
-insert into Employee values(199, 'Greedy', 'Manager');
-insert into Employee values(200, 'Anne', 'Rescue');
 
 /* Front_Desk_Staff Table Insertions */
 insert into Front_Desk_Staff values(184, 18.72);
