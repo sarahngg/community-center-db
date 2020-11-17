@@ -179,7 +179,7 @@ insert into Instructor values(31, 29.00, 'Yoga');
 insert into Instructor values(88, 38.53, 'IT & Web Development');
 insert into Instructor values(65, 34.05, 'Pottery');
 insert into Instructor values(200, 50.21, 'CPR');
-insert into Instructor values(144, 26.27, 'English'); /* Unique constraint violated -> no idea */
+insert into Instructor values(144, 26.27, 'English'); 
 
 /*Class-Leads Insertions*/
 insert into Class_Leads values(105, date '2020-10-23', 0.30, 'Lecture', 'Food Safe 1', 50, 30);
@@ -192,10 +192,12 @@ insert into Class_Leads values(78, date '2020-10-30', 0, 'Hands-on', 'Pottery: I
 insert into Class_Leads values(107, date '2020-10-23', 0.20, 'Fitness', 'Yoga', 15, 31);
 insert into Class_Leads values(111, date '2020-10-24', 0.20, 'Fitness', 'Pilates', 15, 31);
 insert into Class_Leads values(202, date '2020-10-25', 0, 'Discussion', 'English for New Canadians', 10, 144);
+/* Parent key not found */
 insert into Class_Leads values(301, date '2020-10-26', 0.10, 'Training', 'Computer for Seniors', 25, 0);
 
 /* Orders_Equipment Table Insertions */
-insert into Orders_Equipment values(26623, 9.99, "Potter's Wheel", 280775733, 611, 184);
+/* Needed to remove apostrophe */
+insert into Orders_Equipment values(26623, 9.99, 'Potters Wheel', 280775733, 611, 184); 
 insert into Orders_Equipment values(43241, 6.99, 'Kiln', 568349684, 112, 42);
 insert into Orders_Equipment values(11267, 12.99, 'Meat Thermometer', 928832138, 442, 21);
 insert into Orders_Equipment values(64671, 19.99, 'Large Exercise Mat', 212530810, 31, 90);
@@ -207,7 +209,7 @@ insert into Pays_Payment values(date '2020-10-30', 433, 31, 290.00);
 insert into Pays_Payment values(date '2020-10-30', 434, 88, 385.30);
 insert into Pays_Payment values(date '2020-10-30', 435, 65, 340.50);
 insert into Pays_Payment values(date '2020-10-30', 436, 121, 2310.30);
-insert into Pays_Payment values(date '2020-11-15', 437, 65, 202.10);  /* Unique constraint violated -> already state employee ID 65? */
+insert into Pays_Payment values(date '2020-11-15', 437, 65, 202.10); 
 
 /*Customer Table Insertions*/
 insert into Customer values('nathanyan@email.com', 'Nathan', 'Yan');
@@ -217,14 +219,14 @@ insert into Customer values('rreynolds02@gmail.com', 'Ryan', 'Reynolds');
 insert into Customer values('opwinfrey@email.com', 'Oprah', 'Winfrey');
 insert into Customer values('kelly.smith@hotmail.com', 'Kelly', 'Smith');
 insert into Customer values('rng@ubc.ca', 'Raymond', 'Ng');
-insert into Customer values('eknorr@ubc.ca', 'Ed', 'Knorr'); /* Unique constraint violated -> no idea */
+insert into Customer values('eknorr@ubc.ca', 'Ed', 'Knorr');
 
 /*Takes Table Insertions*/
-insert into Takes values('smithk@hotmail.com', 105, date '2020-10-20', 12.00); /* Integrity constraint violated -> parent key not found */
-insert into Takes values('rng@ubc.ca', 107, date '2020-09-05', 18.50); /* Integrity constraint violated -> parent key not found */
-insert into Takes values('rng@ubc.ca', 107, date '2020-09-07', 18.50); /* Integrity constraint violated -> parent key not found */
-insert into Takes values('jdoe@gmail.com', 75, date '2020-09-27', 9.50); /* Integrity constraint violated -> parent key not found */
-insert into Takes values('jdoe@gmail.com', 78, date '2020-10-04', 13.25); /* Integrity constraint violated -> parent key not found */
+insert into Takes values('smithk@hotmail.com', 105, date '2020-10-20', 12.00); 
+insert into Takes values('rng@ubc.ca', 107, date '2020-09-05', 18.50); 
+insert into Takes values('rng@ubc.ca', 107, date '2020-09-07', 18.50); 
+insert into Takes values('jdoe@gmail.com', 75, date '2020-09-27', 9.50); 
+insert into Takes values('jdoe@gmail.com', 78, date '2020-10-04', 13.25); 
 
 /*Process-Purchase-Membership Insertions*/
 insert into Process_Purchase_Membership values(1, 50, 'nathanyan@email.com', date '2020-02-12', 1, 184);
@@ -233,38 +235,38 @@ insert into Process_Purchase_Membership values(3, 50, 'rreynolds02@gmail.com', d
 insert into Process_Purchase_Membership values(4, 150, 'opwinfrey@email.com', date '2020-06-14', 4, 42);
 insert into Process_Purchase_Membership values(5, 200, 'kelly.smith@hotmail.com', date '2020-06-28', 5, 90);
 insert into Process_Purchase_Membership values(6, 100, 'rng@ubc.ca', date '2020-08-02', 6, 121);
-insert into Process_Purchase_Membership values(7, 50, 'eknorr@ubc.ca', date '2020-09-21', 7, 124); /* Integrity constraint violated -> earlier issue */
+insert into Process_Purchase_Membership values(7, 50, 'eknorr@ubc.ca', date '2020-09-21', 7, 124);
 
 /*Workshop Insertions*/
-insert into Workshop values(105, date "2020-10-23", 'Food Safe Level 1', 79.99); /* Missing Expression on date */
-insert into Workshop values(105, date "2020-10-24", 'Food Safe Level 2', 99.99); /* Missing Expression on date */
-insert into Workshop values(232, date "2020-10-23", 'CPR Level A', 150.00); /* Missing Expression on date */
-insert into Workshop values(232, date "2020-10-24", 'CPR Level C', 150.00); /* Missing Expression on date */
-insert into Workshop values(167, date "2020-10-25", 'HTML/CSS Level 1', 50.00); /* Missing Expression on date */
+insert into Workshop values(105, date "2020-10-23", 'Food Safe Level 1', 79.99); 
+insert into Workshop values(105, date "2020-10-24", 'Food Safe Level 2', 99.99); 
+insert into Workshop values(232, date "2020-10-23", 'CPR Level A', 150.00); 
+insert into Workshop values(232, date "2020-10-24", 'CPR Level C', 150.00); 
+insert into Workshop values(167, date "2020-10-25", 'HTML/CSS Level 1', 50.00); 
 
 /* Lesson Table Insertions */
-insert into Lesson values(78, date '2020-10-23', 18.50); /* Integrity constraint violated -> parent not found */
-insert into Lesson values(78, date '2020-10-30', 18.50); /* Integrity constraint violated -> parent not found */
-insert into Lesson values(107, date '2020-10-23', 25.00); /* Integrity constraint violated -> parent not found */
-insert into Lesson values(111, date '2020-10-24', 12.00); /* Integrity constraint violated -> parent not found */
-insert into Lesson values(202, date '2020-10-23', 0.00); /* Integrity constraint violated -> parent not found */
+insert into Lesson values(78, date '2020-10-23', 18.50);
+insert into Lesson values(78, date '2020-10-30', 18.50); 
+insert into Lesson values(107, date '2020-10-23', 25.00); 
+insert into Lesson values(111, date '2020-10-24', 12.00); 
+insert into Lesson values(202, date '2020-10-23', 0.00); 
 
 /* Uses Table Insertions */
-insert into Uses values(78, date '2020-10-23', 26623); /* Integrity constraint violated -> parent not found */
-insert into Uses values(78, date '2020-10-30', 43241); /* Integrity constraint violated -> parent not found */
-insert into Uses values(105, date '2020-10-23', 11267); /* Integrity constraint violated -> parent not found */
-insert into Uses values(232, date '2020-10-24', 64671); /* Integrity constraint violated -> parent not found */
-insert into Uses values(202, date '2020-10-25', 64672); /* Integrity constraint violated -> parent not found */
+insert into Uses values(78, date '2020-10-23', 26623); 
+insert into Uses values(78, date '2020-10-30', 43241); 
+insert into Uses values(105, date '2020-10-23', 11267); 
+insert into Uses values(232, date '2020-10-24', 64671); 
+insert into Uses values(202, date '2020-10-25', 64672); 
 
 /*Has_Room_Booking Insetions*/
-insert into Has_Room_Booking values(4, timestamp('2020-10-23 14:00:00'), 105, date "2020-10-23"); /* missing expression on date */
-insert into Has_Room_Booking values(4, timestamp('2020-10-23 15:00:00'), 105, date "2020-10-23"); /* missing expression on date */
-insert into Has_Room_Booking values(4, timestamp('2020-10-23 16:00:00'), 105, date "2020-10-23"); /* missing expression on date */
-insert into Has_Room_Booking values(4, timestamp('2020-10-23 14:00:00'), 105, date "2020-10-24"); /* missing expression on date */
-insert into Has_Room_Booking values(4, timestamp('2020-10-23 15:00:00'), 105, date "2020-10-24"); /* missing expression on date */
-insert into Has_Room_Booking values(4, timestamp('2020-10-23 16:00:00'), 105, date "2020-10-24"); /* missing expression on date */
-insert into Has_Room_Booking values(4, timestamp('2020-10-23 17:00:00'), NULL, NULL); /* timestamp invalid =( */
-insert into Has_Room_Booking values(11, timestamp('2020-10-23 14:00:00'), 75, date "2020-10-23"); /* missing expression on date */
-insert into Has_Room_Booking values(2, timestamp('2020-10-23 10:00:00'), 78, date "2020-10-23"); /* missing expression on date */
-insert into Has_Room_Booking values(2, timestamp('2020-10-30 10:00:00'), 78, date "2020-10-30"); /* missing expression on date */
-insert into Has_Room_Booking values(5, timestamp('2020-10-23 16:00:00'), 107, date "2020-10-23"); /* missing expression on date */
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 14:00:00'), 105, date "2020-10-23"); 
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 15:00:00'), 105, date "2020-10-23"); 
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 16:00:00'), 105, date "2020-10-23"); 
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 14:00:00'), 105, date "2020-10-24");
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 15:00:00'), 105, date "2020-10-24");
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 16:00:00'), 105, date "2020-10-24"); 
+insert into Has_Room_Booking values(4, timestamp('2020-10-23 17:00:00'), NULL, NULL); 
+insert into Has_Room_Booking values(11, timestamp('2020-10-23 14:00:00'), 75, date "2020-10-23"); 
+insert into Has_Room_Booking values(2, timestamp('2020-10-23 10:00:00'), 78, date "2020-10-23"); 
+insert into Has_Room_Booking values(2, timestamp('2020-10-30 10:00:00'), 78, date "2020-10-30"); 
+insert into Has_Room_Booking values(5, timestamp('2020-10-23 16:00:00'), 107, date "2020-10-23");
