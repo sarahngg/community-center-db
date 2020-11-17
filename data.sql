@@ -192,7 +192,7 @@ insert into Class_Leads values(78, date '2020-10-30', 0, 'Hands-on', 'Pottery: I
 insert into Class_Leads values(107, date '2020-10-23', 0.20, 'Fitness', 'Yoga', 15, 31);
 insert into Class_Leads values(111, date '2020-10-24', 0.20, 'Fitness', 'Pilates', 15, 31);
 insert into Class_Leads values(202, date '2020-10-25', 0, 'Discussion', 'English for New Canadians', 10, 144);
-/* Parent key not found */
+/* Parent key not found -> Need an employee, cannot have 0. How should we resolve this?*/
 insert into Class_Leads values(301, date '2020-10-26', 0.10, 'Training', 'Computer for Seniors', 25, 0);
 
 /* Orders_Equipment Table Insertions */
@@ -222,11 +222,13 @@ insert into Customer values('rng@ubc.ca', 'Raymond', 'Ng');
 insert into Customer values('eknorr@ubc.ca', 'Ed', 'Knorr');
 
 /*Takes Table Insertions*/
-insert into Takes values('smithk@hotmail.com', 105, date '2020-10-20', 12.00); 
-insert into Takes values('rng@ubc.ca', 107, date '2020-09-05', 18.50); 
-insert into Takes values('rng@ubc.ca', 107, date '2020-09-07', 18.50); 
-insert into Takes values('jdoe@gmail.com', 75, date '2020-09-27', 9.50); 
-insert into Takes values('jdoe@gmail.com', 78, date '2020-10-04', 13.25); 
+/* Modified the dates in this table to match actual classes, remember, date is a foreign key!*/
+/* Changed billAmount to match the (1-discount)*classPrice */
+insert into Takes values('smithk@hotmail.com', 105, date '2020-10-23', 99.99); 
+insert into Takes values('rng@ubc.ca', 107, date '2020-10-23', 20.00); 
+insert into Takes values('rng@ubc.ca', 111, date '2020-10-24', 9.60); 
+insert into Takes values('jdoe@gmail.com', 78, date '2020-10-23', 18.50); 
+insert into Takes values('jdoe@gmail.com', 78, date '2020-10-30', 18.50); 
 
 /*Process-Purchase-Membership Insertions*/
 insert into Process_Purchase_Membership values(1, 50, 'nathanyan@email.com', date '2020-02-12', 1, 184);
