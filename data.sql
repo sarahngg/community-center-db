@@ -185,7 +185,7 @@ insert into Class_Leads values(105, date '2020-10-24', 0.30, 'Lecture', 'Food Sa
 insert into Class_Leads values(232, date '2020-10-23', 0.10, 'Training', 'Intro to CPR', 25, 200);
 insert into Class_Leads values(232, date '2020-10-24', 0.10, 'Training', 'CPR Recertification', 25, 200);
 insert into Class_Leads values(167, date '2020-10-25', 0.30, 'Lecture', 'HTML/CSS Level 1', 50, 88);
-insert into Class_Leads values(78, date '2020-10-24', 0, 'Hands-on', 'Pottery: Beginners', 20, 65);
+insert into Class_Leads values(78, date '2020-10-23', 0, 'Hands-on', 'Pottery: Beginners', 20, 65);
 insert into Class_Leads values(78, date '2020-10-30', 0, 'Hands-on', 'Pottery: Intermediate', 20, 65);
 insert into Class_Leads values(107, date '2020-10-23', 0.20, 'Fitness', 'Yoga', 15, 31);
 insert into Class_Leads values(111, date '2020-10-24', 0.20, 'Fitness', 'Pilates', 15, 31);
@@ -258,6 +258,6 @@ insert into Has_Room_Booking values(4, timestamp '2020-10-24 15:00:00', 105, dat
 insert into Has_Room_Booking values(4, timestamp '2020-10-24 16:00:00', 105, date '2020-10-24'); 
 insert into Has_Room_Booking values(4, timestamp '2020-10-24 17:00:00', NULL, NULL); 
 insert into Has_Room_Booking values(11, timestamp '2020-10-23 14:00:00', 75, date '2020-10-23'); 
-insert into Has_Room_Booking values(2, timestamp '2020-10-24 10:00:00', 78, date '2020-10-24'); 
+insert into Has_Room_Booking values(2, timestamp '2020-10-23 10:00:00', 78, date '2020-10-23'); 
 insert into Has_Room_Booking values(2, timestamp '2020-10-30 10:00:00', 78, date '2020-10-30'); 
 insert into Has_Room_Booking values(5, timestamp '2020-10-23 16:00:00', 107, date '2020-10-23');
