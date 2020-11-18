@@ -72,6 +72,15 @@
             <input type="hidden" id="displayTupleRequest" name="displayTupleRequest">
             <input type="submit" name="displayTuples"></p>
         </form>
+        <hr />
+
+        <h2>Selection: Find Employees with</h2>
+        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="selectionRequest" name="selectionRequest">
+            Employee ID <= <input type="number" min="0" step="1" name="eID"> AND <br /><br />
+            Last Name starts with the letter: <input type="text" name="lastName"> <br /><br />
+            <input type="submit" value="Query" name="selectionSubmit"></p>
+        </form>
 
         <?php
 		//this tells the system that it's no longer just parsing html; it's now parsing PHP
@@ -241,6 +250,18 @@
             printResult($result);
         }
 
+        function handleSelectionRequest() {
+            global $db_conn;
+
+            $eID = $_POST['eID'];
+            $lastName = $_POST['lastName'];
+
+            // you need the wrap the eID and lastName values with single quotations
+            $result = executePlainSQL("SELECT * FROM Employee WHERE eID<='" . $eID . "' AND lastName LIKE'" . $lastName . "%'");
+            printResult($result);
+            OCICommit($db_conn);
+        }
+
         // HANDLE ALL POST ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
         function handlePOSTRequest() {
@@ -251,6 +272,8 @@
                     handleUpdateRequest();
                 } else if (array_key_exists('insertQueryRequest', $_POST)) {
                     handleInsertRequest();
+                } else if (array_key_exists('selectionRequest', $_POST)) {
+                    handleSelectionRequest();
                 }
 
                 disconnectFromDB();
@@ -271,7 +294,7 @@
             }
         }
 
-		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
+		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['selectionSubmit'])) {
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest'])) {
             handleGETRequest();
