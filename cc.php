@@ -81,6 +81,40 @@
             Last Name starts with the letter: <input type="text" name="lastName"> <br /><br />
             <input type="submit" value="Query" name="selectionSubmit"></p>
         </form>
+        <hr />
+
+        <h2>Projection: Show these attributes of Class_Leads</h2>
+        <form method="POST" action="cc.php">
+            <input type="hidden" id="projectionRequest" name="projectionRequest">
+            <select name="projection_list1" id="projection_list1"> <br /><br />
+                <option value="classID">classID</option>
+                <option value="date">date</option>
+                <option value="memberDiscount">memberDiscount</option>
+                <option value="classType">classType</option>
+                <option value="className">className</option>
+                <option value="maxSpots">maxSpots</option>
+                <option value="eID">eID</option>
+            </select>
+            <select name="projection_list2" id="projection_list2"> <br /><br />
+                <option value="classID">classID</option>
+                <option value="date">date</option>
+                <option value="memberDiscount">memberDiscount</option>
+                <option value="classType">classType</option>
+                <option value="className">className</option>
+                <option value="maxSpots">maxSpots</option>
+                <option value="eID">eID</option>
+            </select>
+            <select name="projection_list3" id="projection_list3"> <br /><br />
+                <option value="classID">classID</option>
+                <option value="date">date</option>
+                <option value="memberDiscount">memberDiscount</option>
+                <option value="classType">classType</option>
+                <option value="className">className</option>
+                <option value="maxSpots">maxSpots</option>
+                <option value="eID">eID</option>
+            </select>
+            <input type="submit" value="Query" name="projectionSubmit"></p>
+        </form>
 
         <?php
 		//this tells the system that it's no longer just parsing html; it's now parsing PHP
@@ -262,6 +296,26 @@
             OCICommit($db_conn);
         }
 
+        function handleProjectionRequest() {
+            global $db_conn;
+
+            $projection_list1 = $_POST['projection_list1'];
+            $projection_list2 = $_POST['projection_list2'];
+            $projection_list3 = $_POST['projection_list3'];
+
+            $result = executePlainSQL("SELECT $projection_list1, $projection_list2, $projection_list3 FROM Class_Leads");
+
+            echo "<br>Retrieved data from table Class_Leads:<br>";
+            echo "<table>";
+            echo "<tr><th>$projection_list1</th><th>$projection_list2</th><th>$projection_list3</th></tr>";
+            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td></tr>"; //or just use "echo $row[0]"; 
+            }
+
+            echo "</table>";
+            OCICommit($db_conn);
+        }
+
         // HANDLE ALL POST ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
         function handlePOSTRequest() {
@@ -274,6 +328,8 @@
                     handleInsertRequest();
                 } else if (array_key_exists('selectionRequest', $_POST)) {
                     handleSelectionRequest();
+                } else if (array_key_exists('projectionRequest', $_POST)) {
+                    handleProjectionRequest();
                 }
 
                 disconnectFromDB();
@@ -294,7 +350,7 @@
             }
         }
 
-		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['selectionSubmit'])) {
+		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['selectionSubmit']) || isset($_POST['projectionSubmit'])) {
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest'])) {
             handleGETRequest();
