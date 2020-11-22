@@ -63,6 +63,15 @@
 
         <hr />
 
+        <h2>Delete a class</h2>
+        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="deleteQueryRequest" name="deleteQueryRequest">
+            Class name: <input type="text" name="className"> <br /><br />
+            <input type="submit" value="Delete" name="deleteSubmit"></p>
+        </form>
+
+        <hr />
+
         <h2>Update Name in DemoTable</h2>
         <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
@@ -292,6 +301,14 @@
             OCICommit($db_conn);
         }
 
+        function handleDeleteRequest() {
+          global $db_conn;
+          $className = $_POST['className'];
+          // you need the wrap the eID and lastName values with single quotations
+          $result = executePlainSQL("DELETE FROM Class_Leads WHERE className <='" . $className . "'");
+          OCICommit($db_conn);
+      }
+
         function handleAggregationRequest() {
             global $db_conn;
 
@@ -370,6 +387,8 @@
                     handleUpdateRequest();
                 } else if (array_key_exists('insertQueryRequest', $_POST)) {
                     handleInsertRequest();
+                } else if (array_key_exists('deleteQueryRequest', $_POST)) {
+                    handleDeleteRequest();
                 } else if (array_key_exists('selectionRequest', $_POST)) {
                     handleSelectionRequest();
                 } else if (array_key_exists('projectionRequest', $_POST)) {
@@ -396,7 +415,7 @@
 
     if (isset($_POST['reset']) || isset($_POST['updateSubmit']) 
         || isset($_POST['insertSubmit']) || isset($_POST['selectionSubmit']) 
-        || isset($_POST['projectionSubmit'])) {
+        || isset($_POST['projectionSubmit']) || isset($_POST['deleteSubmit'])) {
             handlePOSTRequest();
         } else if (isset($_GET['aggregateTupleRequest']) || isset($_GET['displayTupleRequest'])  || isset($_GET['divisionSubmit'])) {
             handleGETRequest();
