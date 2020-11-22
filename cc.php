@@ -29,19 +29,27 @@
     </head>
 
     <body>
+      <div id="app-bar"> 
+        <div class="app-bar-content">
+          <h1>📊 Community Centre Management Tool</h1>
+        </div>
+        <div class="app-bar-content">
+          <p>Test</p>
+        </div>
+      </div>
       <div class="row">
       
       <div>
-        <h2>Reset</h2>
+        <!-- <h2>Reset</h2>
         <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
 
         <form method="POST" action="cc.php">
-            <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
+      
             <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
             <p><input type="submit" value="Reset" name="reset"></p>
         </form>
 
-        <hr />
+        <hr /> -->
 
         <h2>Insert Values into Employee</h2>
         <form method="POST" action="cc.php"> <!--refresh page when submitted-->
@@ -68,10 +76,10 @@
 
         <hr />
 
-        <h2>Count the Tuples in DemoTable</h2>
+        <h2>Aggregation: Calculate the average hourly rate for front desk employees</h2>
         <form method="GET" action="cc.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="countTupleRequest" name="countTupleRequest">
-            <input type="submit" name="countTuples"></p>
+            <input type="hidden" id="aggregateTupleRequest" name="aggregateTupleRequest">
+            <input type="submit" name="aggregateTuples"></p>
         </form>
         <hr />
 
@@ -122,6 +130,13 @@
                 <option value="eID">eID</option>
             </select>
             <input type="submit" value="Query" name="projectionSubmit"></p>
+        </form>
+        <hr />
+
+        <h2>Division: Who takes all the classes?</h2>
+        <form method="GET" action="cc.php">
+            <input type="hidden" id="divisionRequest" name="divisionRequest">
+            <input type="submit" name="divisionSubmit"></p>
         </form>
       </div>
       <div id="result">
@@ -201,7 +216,7 @@
         }
 
         function printResult($result) { //prints results from a select statement
-            echo "<br>Retrieved data from table Employee:<br>";
+            echo "<br>Retrieved from Employee:<br>";
             echo "<table>";
             echo "<tr><th>eID</th><th>firstName</th><th>lastName</th></tr>";
             while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
@@ -277,13 +292,13 @@
             OCICommit($db_conn);
         }
 
-        function handleCountRequest() {
+        function handleAggregationRequest() {
             global $db_conn;
 
-            $result = executePlainSQL("SELECT Count(*) FROM demoTable");
+            $result = executePlainSQL("SELECT Avg(hourlyRate) FROM Front_Desk_Staff");
 
             if (($row = oci_fetch_row($result)) != false) {
-                echo "<br> The number of tuples in demoTable: " . $row[0] . "<br>";
+                echo "<br>Front desk staff average hourly rate:". "<br> CAD " . round($row[0], 2) . "<br>";
             }
         }
 
@@ -306,6 +321,16 @@
             OCICommit($db_conn);
         }
 
+        function handleDivisionRequest() {
+            global $db_conn;
+
+            $result = executePlainSQL("SELECT * FROM Customer C WHERE NOT EXISTS ((SELECT CL.classID FROM Class_Leads CL) MINUS (SELECT T.classID FROM Takes T  WHERE T.email=C.email)) ");
+
+            if (($row = oci_fetch_row($result)) != false) {
+                echo "<br>Our number one fan:". "<br>" . $row[0] . "<br>";
+            }
+        }
+
         function handleProjectionRequest() {
             global $db_conn;
 
@@ -325,13 +350,12 @@
             }
             $result = executePlainSQL("SELECT $projection_list1, $projection_list2, $projection_list3 FROM Class_Leads");
 
-            echo "<br>Retrieved data from table Class_Leads:<br>";
+            echo "<br>Retrieved from Class_Leads:<br>";
             echo "<table>";
             echo "<tr><th>$projection_list1</th><th>$projection_list2</th><th>$projection_list3</th></tr>";
             while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
                 echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td></tr>"; //or just use "echo $row[0]"; 
             }
-
             echo "</table>";
             OCICommit($db_conn);
         }
@@ -350,8 +374,7 @@
                     handleSelectionRequest();
                 } else if (array_key_exists('projectionRequest', $_POST)) {
                     handleProjectionRequest();
-                }
-
+                } 
                 disconnectFromDB();
             }
         }
@@ -360,19 +383,22 @@
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
         function handleGETRequest() {
             if (connectToDB()) {
-                if (array_key_exists('countTuples', $_GET)) {
-                    handleCountRequest();
+                if (array_key_exists('aggregateTuples', $_GET)) {
+                    handleAggregationRequest();
                 } else if (array_key_exists('displayTuples', $_GET)) {
                     handleDisplayRequest();
-                }
+                } else if (array_key_exists('divisionRequest', $_GET))
+                    handleDivisionRequest();
 
                 disconnectFromDB();
             }
         }
 
-		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['selectionSubmit']) || isset($_POST['projectionSubmit'])) {
+    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) 
+        || isset($_POST['insertSubmit']) || isset($_POST['selectionSubmit']) 
+        || isset($_POST['projectionSubmit'])) {
             handlePOSTRequest();
-        } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest'])) {
+        } else if (isset($_GET['aggregateTupleRequest']) || isset($_GET['displayTupleRequest'])  || isset($_GET['divisionSubmit'])) {
             handleGETRequest();
         }
 		?>
