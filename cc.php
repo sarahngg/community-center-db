@@ -60,6 +60,16 @@
 
         <hr />
 
+        <h2>Update: Specific instructor for classID 301 on 2020-10-26</h2>
+        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="updateQueryRequestInstructor" name="updateQueryRequestInstructor">
+            Pay: <input type="real" min="0.00" name="Pay"> <br /><br />
+            Specialization: <input type="text" name="Specialization"> <br /><br />
+            <input type="submit" value="Update" name="updateSubmit"></p>
+        </form>
+        
+        <hr />
+
         <h2>Count the Tuples in DemoTable</h2>
         <form method="GET" action="cc.php"> <!--refresh page when submitted-->
             <input type="hidden" id="countTupleRequest" name="countTupleRequest">
@@ -115,15 +125,6 @@
             </select>
             <input type="submit" value="Query" name="projectionSubmit"></p>
         </form>
-
-        <h2>Update: Update specific instructor for classID 301 on 2020-10-26</h2>
-        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="updateQueryRequestInstructor" name="updateQueryRequestInstructor">
-            Pay: <input type="real" min="0.00" name="Pay"> AND <br /><br />
-            Specialization: <input type="text" name="specialization"> <br /><br />
-            <input type="submit" value="Update" name="updateSubmit"></p>
-        </form>
-        <hr />
 
         <?php
 		//this tells the system that it's no longer just parsing html; it's now parsing PHP
@@ -211,6 +212,17 @@
             echo "</table>";
         }
 
+        function printResultInstructor($result) { //prints results from a select statement
+            echo "<br>Retrieved data from table Instructor:<br>";
+            echo "<table>";
+            echo "<tr><th>eID</th><th>programRate</th><th>Specialization</th></tr>";
+            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
+                echo "<tr><td>" . $row["EID"] . "</td><td>" . $row["PROGRAMRATE"] . "</td><td>" . $row["SPECIALIZATION"] . "</td></tr>"; //or just use "echo $row[0]"; 
+            }
+
+            echo "</table>";
+        }
+
         function connectToDB() {
             global $db_conn;
 
@@ -250,13 +262,13 @@
         function handleUpdateRequestInstructor() {
             global $db_conn;
 
-            $pay = $_POST['pay'];
-            $specialization = $_POST['specialization'];
+            $pay = $_POST['Pay'];
+            $specialization = $_POST['Specialization'];
 
             // you need the wrap the pay, specialization and eID values with single quotations
-            executePlainSQL("UPDATE Instructor SET Pay='" . $pay . "', Specialization='" . $specialization . "' WHERE eID='" . 301 . "'");
+            executePlainSQL("UPDATE Instructor SET programRate='" . $pay . "', Specialization='" . $specialization . "' WHERE eID='" . 88 . "'");
             $result = executePlainSQL("SELECT * FROM Instructor");
-            printResult($result);
+            printResultInstructor($result);
             OCICommit($db_conn);
         }
 
