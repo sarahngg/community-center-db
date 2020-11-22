@@ -116,6 +116,15 @@
             <input type="submit" value="Query" name="projectionSubmit"></p>
         </form>
 
+        <h2>Update: Update specific instructor for classID 301 on 2020-10-26</h2>
+        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="updateQueryRequestInstructor" name="updateQueryRequestInstructor">
+            Pay: <input type="real" min="0.00" name="Pay"> AND <br /><br />
+            Specialization: <input type="text" name="specialization"> <br /><br />
+            <input type="submit" value="Update" name="updateSubmit"></p>
+        </form>
+        <hr />
+
         <?php
 		//this tells the system that it's no longer just parsing html; it's now parsing PHP
 
@@ -238,6 +247,19 @@
             OCICommit($db_conn);
         }
 
+        function handleUpdateRequestInstructor() {
+            global $db_conn;
+
+            $pay = $_POST['pay'];
+            $specialization = $_POST['specialization'];
+
+            // you need the wrap the pay, specialization and eID values with single quotations
+            executePlainSQL("UPDATE Instructor SET Pay='" . $pay . "', Specialization='" . $specialization . "' WHERE eID='" . 301 . "'");
+            $result = executePlainSQL("SELECT * FROM Instructor");
+            printResult($result);
+            OCICommit($db_conn);
+        }
+
         function handleResetRequest() {
             global $db_conn;
             // Drop old table
@@ -340,6 +362,8 @@
                     handleSelectionRequest();
                 } else if (array_key_exists('projectionRequest', $_POST)) {
                     handleProjectionRequest();
+                } else if (array_key_exists('updateQueryRequestInstructor', $_POST)) {
+                    handleUpdateRequestInstructor();
                 }
 
                 disconnectFromDB();
