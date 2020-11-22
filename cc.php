@@ -1,5 +1,7 @@
 
 
+
+
 <!--Test Oracle file for UBC CPSC304 2018 Winter Term 1
   Created by Jiemin Zhang
   Modified by Simona Radu
@@ -21,9 +23,15 @@
   <html>
     <head>
         <title>CPSC 304 Community Centre Database</title>
+        <link rel="stylesheet" href="https://www.students.cs.ubc.ca/~sarahn26/ccstyles.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"> 
     </head>
 
     <body>
+      <div class="row">
+      
+      <div>
         <h2>Reset</h2>
         <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
 
@@ -115,7 +123,8 @@
             </select>
             <input type="submit" value="Query" name="projectionSubmit"></p>
         </form>
-
+      </div>
+      <div id="result">
         <?php
 		//this tells the system that it's no longer just parsing html; it's now parsing PHP
 
@@ -206,7 +215,8 @@
             global $db_conn;
 
             // Your username is ora_(CWL_ID) and the password is a(student number). For example, 
-			// ora_platypus is the username and a12345678 is the password.
+            // ora_platypus is the username and a12345678 is the password.
+            // $db_conn = OCILogon("ora_cwl", "password", "dbhost.students.cs.ubc.ca:1522/stu");
             $db_conn = OCILogon("ora_cwl", "password", "dbhost.students.cs.ubc.ca:1522/stu");
 
             if ($db_conn) {
@@ -366,5 +376,7 @@
             handleGETRequest();
         }
 		?>
+    </div>
+    </div>
 	</body>
 </html>
