@@ -302,7 +302,17 @@
             $projection_list1 = $_POST['projection_list1'];
             $projection_list2 = $_POST['projection_list2'];
             $projection_list3 = $_POST['projection_list3'];
+            if ($projection_list1 == 'date') {
+              $projection_list1 = '"' . $projection_list1 . '"' ;
+            }
 
+            if ($projection_list2 == 'date') {
+              $projection_list2 = '"' . $projection_list2 . '"' ;
+            }
+
+            if ($projection_list3 == 'date') {
+              $projection_list3 = '"' . $projection_list3 . '"' ;
+            }
             $result = executePlainSQL("SELECT $projection_list1, $projection_list2, $projection_list3 FROM Class_Leads");
 
             echo "<br>Retrieved data from table Class_Leads:<br>";
