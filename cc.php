@@ -72,6 +72,49 @@
             <input type="hidden" id="displayTupleRequest" name="displayTupleRequest">
             <input type="submit" name="displayTuples"></p>
         </form>
+        <hr />
+
+        <h2>Selection: Find Employees with</h2>
+        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="selectionRequest" name="selectionRequest">
+            Employee ID <= <input type="number" min="0" step="1" name="eID"> AND <br /><br />
+            Last Name starts with the letter: <input type="text" name="lastName"> <br /><br />
+            <input type="submit" value="Query" name="selectionSubmit"></p>
+        </form>
+        <hr />
+
+        <h2>Projection: Show these attributes of Class_Leads</h2>
+        <form method="POST" action="cc.php">
+            <input type="hidden" id="projectionRequest" name="projectionRequest">
+            <select name="projection_list1" id="projection_list1"> <br /><br />
+                <option value="classID">classID</option>
+                <option value="date">date</option>
+                <option value="memberDiscount">memberDiscount</option>
+                <option value="classType">classType</option>
+                <option value="className">className</option>
+                <option value="maxSpots">maxSpots</option>
+                <option value="eID">eID</option>
+            </select>
+            <select name="projection_list2" id="projection_list2"> <br /><br />
+                <option value="classID">classID</option>
+                <option value="date">date</option>
+                <option value="memberDiscount">memberDiscount</option>
+                <option value="classType">classType</option>
+                <option value="className">className</option>
+                <option value="maxSpots">maxSpots</option>
+                <option value="eID">eID</option>
+            </select>
+            <select name="projection_list3" id="projection_list3"> <br /><br />
+                <option value="classID">classID</option>
+                <option value="date">date</option>
+                <option value="memberDiscount">memberDiscount</option>
+                <option value="classType">classType</option>
+                <option value="className">className</option>
+                <option value="maxSpots">maxSpots</option>
+                <option value="eID">eID</option>
+            </select>
+            <input type="submit" value="Query" name="projectionSubmit"></p>
+        </form>
 
         <?php
 		//this tells the system that it's no longer just parsing html; it's now parsing PHP
@@ -241,6 +284,48 @@
             printResult($result);
         }
 
+        function handleSelectionRequest() {
+            global $db_conn;
+
+            $eID = $_POST['eID'];
+            $lastName = $_POST['lastName'];
+
+            // you need the wrap the eID and lastName values with single quotations
+            $result = executePlainSQL("SELECT * FROM Employee WHERE eID<='" . $eID . "' AND lastName LIKE'" . $lastName . "%'");
+            printResult($result);
+            OCICommit($db_conn);
+        }
+
+        function handleProjectionRequest() {
+            global $db_conn;
+
+            $projection_list1 = $_POST['projection_list1'];
+            $projection_list2 = $_POST['projection_list2'];
+            $projection_list3 = $_POST['projection_list3'];
+            if ($projection_list1 == 'date') {
+              $projection_list1 = '"' . $projection_list1 . '"' ;
+            }
+
+            if ($projection_list2 == 'date') {
+              $projection_list2 = '"' . $projection_list2 . '"' ;
+            }
+
+            if ($projection_list3 == 'date') {
+              $projection_list3 = '"' . $projection_list3 . '"' ;
+            }
+            $result = executePlainSQL("SELECT $projection_list1, $projection_list2, $projection_list3 FROM Class_Leads");
+
+            echo "<br>Retrieved data from table Class_Leads:<br>";
+            echo "<table>";
+            echo "<tr><th>$projection_list1</th><th>$projection_list2</th><th>$projection_list3</th></tr>";
+            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td></tr>"; //or just use "echo $row[0]"; 
+            }
+
+            echo "</table>";
+            OCICommit($db_conn);
+        }
+
         // HANDLE ALL POST ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
         function handlePOSTRequest() {
@@ -251,6 +336,10 @@
                     handleUpdateRequest();
                 } else if (array_key_exists('insertQueryRequest', $_POST)) {
                     handleInsertRequest();
+                } else if (array_key_exists('selectionRequest', $_POST)) {
+                    handleSelectionRequest();
+                } else if (array_key_exists('projectionRequest', $_POST)) {
+                    handleProjectionRequest();
                 }
 
                 disconnectFromDB();
@@ -271,7 +360,7 @@
             }
         }
 
-		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
+		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['selectionSubmit']) || isset($_POST['projectionSubmit'])) {
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest'])) {
             handleGETRequest();
