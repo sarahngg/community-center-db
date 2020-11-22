@@ -218,8 +218,15 @@ insert into Customer values('eknorr@ubc.ca', 'Ed', 'Knorr');
 -- Modified the dates in this table to match actual classes, remember, date is a foreign key!
 -- Changed billAmount to match the (1-discount)*classPrice 
 insert into Takes values('smithk@hotmail.com', 105, date '2020-10-23', 99.99); 
-insert into Takes values('rng@ubc.ca', 107, date '2020-10-23', 20.00); 
-insert into Takes values('rng@ubc.ca', 111, date '2020-10-24', 9.60); 
+insert into Takes values('rng@ubc.ca', 105, date '2020-10-23', 9.60); 
+insert into Takes values('rng@ubc.ca', 232, date '2020-10-24', 9.60); 
+insert into Takes values('rng@ubc.ca', 167, date '2020-10-25', 9.60); 
+insert into Takes values('rng@ubc.ca', 78, date '2020-10-30', 9.60); 
+insert into Takes values('rng@ubc.ca', 107, date '2020-10-23', 9.60);
+insert into Takes values('rng@ubc.ca', 111, date '2020-10-24', 9.60);
+insert into Takes values('rng@ubc.ca', 202, date '2020-10-25', 9.60);
+insert into Takes values('rng@ubc.ca', 301, date '2020-10-26', 9.60);
+insert into Takes values('rng@ubc.ca', 75, date '2020-10-23', 9.60);
 insert into Takes values('jdoe@gmail.com', 78, date '2020-10-23', 18.50); 
 insert into Takes values('jdoe@gmail.com', 78, date '2020-10-30', 18.50); 
 
