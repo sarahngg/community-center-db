@@ -42,12 +42,12 @@
 
         <hr />
 
-        <h2>Update Instructor Details</h2>
-        <h6>Update a specific instructor for classID 301 on 2020-10-26</h6>
+        <h2>Update Front-Desk Staff Wages </h2>
+        <h6>Update a specific front desk staff's wages</h6>
         <form method="POST" action="cc.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="updateQueryRequestInstructor" name="updateQueryRequestInstructor">
-            <input type="real" min="0.00" name="Pay" placeholder="Program Rate in CAD"> 
-            <input type="text" name="Specialization" placeholder="Specialization">
+            <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
+            <input type="int" name="eID" placeholder="Employee ID"> 
+            <input type="real" min="0.00" name="hourlyRate" placeholder="New Wage">
             <input class="submit-button" type="submit" value="Update" name="updateSubmit">
         </form>
         
@@ -196,6 +196,7 @@
             }
         }
 
+        // General print function; useful to look at for help!
         function printResult($result) { //prints results from a select statement
             echo "<br>Retrieved from Employee:<br>";
             echo "<table>";
@@ -207,16 +208,17 @@
             echo "</table>";
         }
 
-        function printResultInstructor($result) { //prints results from a select statement
-            echo "<br>Retrieved data from table Instructor:<br>";
+        function printFront_Desk_Staff($result) {
+            echo "<br>Retrieved from Front_Desk_Staff:<br>";
             echo "<table>";
-            echo "<tr><th>eID</th><th>programRate</th><th>Specialization</th></tr>";
+            echo "<tr><th>eID</th><th>hourlyRate</th></tr>";
             while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
-                echo "<tr><td>" . $row["EID"] . "</td><td>" . $row["PROGRAMRATE"] . "</td><td>" . $row["SPECIALIZATION"] . "</td></tr>"; //or just use "echo $row[0]"; 
+                echo "<tr><td>" . $row["EID"] . "</td><td>" . $row["HOURLYRATE"] . "</td></tr>"; //or just use "echo $row[0]"; 
             }
 
             echo "</table>";
         }
+
 
         function connectToDB() {
             global $db_conn;
@@ -248,24 +250,12 @@
         function handleUpdateRequest() {
             global $db_conn;
 
-            $old_name = $_POST['oldName'];
-            $new_name = $_POST['newName'];
-
-            // you need the wrap the old name and new name values with single quotations
-            executePlainSQL("UPDATE demoTable SET name='" . $new_name . "' WHERE name='" . $old_name . "'");
-            OCICommit($db_conn);
-        }
-
-        function handleUpdateRequestInstructor() {
-            global $db_conn;
-
-            $pay = $_POST['Pay'];
-            $specialization = $_POST['Specialization'];
+            $eID = $_POST['eID'];
+            $hourlyRate = $_POST['hourlyRate'];
 
             // you need the wrap the pay, specialization and eID values with single quotations
-            executePlainSQL("UPDATE Instructor SET programRate='" . $pay . "', Specialization='" . $specialization . "' WHERE eID='" . 88 . "'");
-            $result = executePlainSQL("SELECT * FROM Instructor");
-            printResultInstructor($result);
+            $result = executePlainSQL("UPDATE Front_Desk_Staff SET hourlyRate='" . $hourlyRate . "' WHERE eID='" . $eID . "'");
+            printFront_Desk_Staff($result);
             OCICommit($db_conn);
         }
 
@@ -390,9 +380,7 @@
                     handleSelectionRequest();
                 } else if (array_key_exists('projectionRequest', $_POST)) {
                     handleProjectionRequest();
-                } else if (array_key_exists('updateQueryRequestInstructor', $_POST)) {
-                    handleUpdateRequestInstructor();
-                }
+                } 
                 disconnectFromDB();
             }
         }
