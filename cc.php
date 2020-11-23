@@ -89,14 +89,14 @@
                 <option value="classType">classType</option>
                 <option value="className">className</option>
                 <option value="maxSpots">maxSpots</option>
-                <option value="eID">eID</option>
+                <option value="eID" selected>eID</option>
             </select>
             <select name="projection_list2" id="projection_list2">
                 <option value="classID">classID</option>
                 <option value="date">date</option>
                 <option value="memberDiscount">memberDiscount</option>
                 <option value="classType">classType</option>
-                <option value="className">className</option>
+                <option value="className" selected>className</option>
                 <option value="maxSpots">maxSpots</option>
                 <option value="eID">eID</option>
             </select>
@@ -106,7 +106,7 @@
                 <option value="memberDiscount">memberDiscount</option>
                 <option value="classType">classType</option>
                 <option value="className">className</option>
-                <option value="maxSpots">maxSpots</option>
+                <option value="maxSpots" selected>maxSpots</option>
                 <option value="eID">eID</option>
             </select>
             <input class="submit-button" type="submit" value="Query" name="projectionSubmit">
