@@ -363,25 +363,25 @@
             }
         }
 
-        // function handleJoinRequest() {
-        //     global $db_conn;
+        function handleJoinRequest() {
+            global $db_conn;
 
-        //     $eID = $_POST['eID'];
+            $eID = $_POST['eID'];
 
-        //     // you need the wrap the pay, specialization and eID values with single quotations
-        //     $result = executePlainSQL("SELECT DISTINCT C.firstName as FN, C.lastName as LN FROM Customer C, Takes T, Class_Leads CL 
-        //     WHERE eID='" . $eID . "'" AND T.email = C.email AND T.classID = CL.classID);
+            // you need the wrap the pay, specialization and eID values with single quotations
+            $result = executePlainSQL("SELECT DISTINCT C.firstName as FN, C.lastName as LN FROM Customer C, Takes T, Class_Leads CL 
+            WHERE eID='" . $eID . "' AND T.email = C.email AND T.classID = CL.classID");
             
-        //     echo "<br>Retrieved from Join:<br>";
-        //     echo "<table>";
-        //     echo "<tr><th>firstName</th><th>lastName</th></tr>";
-        //     while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
-        //         echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; //or just use "echo $row[0]"; 
-        //     }
-        //     echo "</table>";
+            echo "<br>Retrieved from Join:<br>";
+            echo "<table>";
+            echo "<tr><th>firstName</th><th>lastName</th></tr>";
+            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; //or just use "echo $row[0]"; 
+            }
+            echo "</table>";
             
-        //     OCICommit($db_conn); 
-        // }
+            OCICommit($db_conn); 
+        }
 
         function handleProjectionRequest() {
             global $db_conn;
