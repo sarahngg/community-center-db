@@ -119,6 +119,14 @@
             <input type="hidden" id="divisionRequest" name="divisionRequest">
             <input class="submit-button" type="submit" name="divisionSubmit">
         </form>
+        <hr />
+
+        <h2>What are the total spots available for instructors who teach multiple classes?</h2>
+        <h6>For each instructor that teaches more than 1 class, find the total number of spots available across all his/her classes.</h6>
+        <form method="GET" action="cc.php">
+            <input type="hidden" id="aggregateHavingRequest" name="aggregateHavingRequest">
+            <input class="submit-button" type="submit" name="aggregateHavingSubmit">
+        </form>
       </div>
       <div id="result">
         <?php
@@ -316,6 +324,20 @@
             }
         }
 
+        function handleAggregationHavingRequest() {
+            global $db_conn;
+
+            $result = executePlainSQL("SELECT I.eID, SUM(CL.maxSpots) FROM Instructor I, Class_Leads CL WHERE I.eID=CL.eID GROUP BY I.eID HAVING COUNT(*)>1");
+
+            echo "<br>Max total spots for instructors that teach multiple classes:<br>";
+            echo "<table>";
+            echo "<tr><th>eID</th><th>Total spots available</th></tr>";
+            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; //or just use "echo $row[0]"; 
+            }
+            echo "</table>";
+        }
+
         function handleDisplayRequest() {
             global $db_conn;
             $result = executePlainSQL("SELECT * FROM Employee");
@@ -405,8 +427,11 @@
                     handleAggregationRequest();
                 } else if (array_key_exists('displayTuples', $_GET)) {
                     handleDisplayRequest();
-                } else if (array_key_exists('divisionRequest', $_GET))
+                } else if (array_key_exists('divisionRequest', $_GET)){
                     handleDivisionRequest();
+                } else if (array_key_exists('aggregateHavingRequest', $_GET)) {
+                    handleAggregationHavingRequest();
+                }
 
                 disconnectFromDB();
             }
@@ -416,7 +441,7 @@
         || isset($_POST['insertSubmit']) || isset($_POST['selectionSubmit']) 
         || isset($_POST['projectionSubmit']) || isset($_POST['deleteSubmit'])) {
             handlePOSTRequest();
-        } else if (isset($_GET['aggregateTupleRequest']) || isset($_GET['displayTupleRequest'])  || isset($_GET['divisionSubmit'])) {
+        } else if (isset($_GET['aggregateTupleRequest']) || isset($_GET['displayTupleRequest'])  || isset($_GET['divisionSubmit'])  || isset($_GET['aggregateHavingSubmit'])) {
             handleGETRequest();
         }
 		?>
