@@ -86,6 +86,15 @@
         </form>
         <hr />
 
+        <h2>Full Names of all Customers who took class with specific instructor</h2>
+        <h6>Join: Joins Takes, Customer, and Class_Leads</h6>
+        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="joinRequest" name="joinRequest">
+            <input type="number" min="0" step="1" name="eID" placeholder="Instructor ID"> 
+            <input class="submit-button" type="submit" value="Query" name="joinSubmit">
+        </form>
+        <hr />
+
         <h2>Show Details of Classes</h2>
         <h6>Projection: Show these attributes of Class_Leads</h6>
         <form method="POST" action="cc.php">
@@ -262,7 +271,7 @@
             $hourlyRate = $_POST['hourlyRate'];
 
             // you need the wrap the pay, specialization and eID values with single quotations
-            executePlainSQL("UPDATE Front_Desk_Staff SET hourlyRate='" . $hourlyRate . "' WHERE eID='" . $eID . "'");
+            $result = executePlainSQL("UPDATE Front_Desk_Staff SET hourlyRate='" . $hourlyRate . "' WHERE eID='" . $eID . "'");
             
             echo "<br>Retrieved from Front_Desk_Staff:<br>";
             echo "<table>";
@@ -366,6 +375,28 @@
             }
         }
 
+        function handleJoinRequest() {
+            global $db_conn;
+
+            $eID = $POST['eID'];
+
+            // you need the wrap the pay, specialization and eID values with single quotations
+            $result = executePlainSQL("SELECT DISTINCT C.firstName, C.lastName FROM Customer C, Takes T, Class_Leads CL WHERE eID='" . $eID . "'" AND T.email = C.email AND T.classID = CL.classID);
+            
+            echo "<br>Retrieved from Join:<br>";
+            echo "<table>";
+            echo "<tr><th>firstName</th><th>lastName</th></tr>";
+            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; //or just use "echo $row[0]"; 
+            }
+
+            echo "</table>";
+            
+            OCICommit($db_conn);
+
+            
+        }
+
         function handleProjectionRequest() {
             global $db_conn;
 
@@ -411,7 +442,9 @@
                     handleSelectionRequest();
                 } else if (array_key_exists('projectionRequest', $_POST)) {
                     handleProjectionRequest();
-                } 
+                } else if (array_key_exists('joinRequest', $_POST)) {
+                    handleJoinRequest();
+                }
                 disconnectFromDB();
             }
         }
@@ -436,7 +469,7 @@
 
     if (isset($_POST['reset']) || isset($_POST['updateSubmit']) 
         || isset($_POST['insertSubmit']) || isset($_POST['selectionSubmit']) 
-        || isset($_POST['projectionSubmit']) || isset($_POST['deleteSubmit'])) {
+        || isset($_POST['projectionSubmit']) || isset($_POST['deleteSubmit']) || isset($_POST['joinSubmit'])) {
             handlePOSTRequest();
         } else if (isset($_GET['aggregateTupleRequest']) || isset($_GET['displayTupleRequest'])  || isset($_GET['divisionSubmit']) || isset($_GET['aggregateGroupBySubmit'])) {
             handleGETRequest();
