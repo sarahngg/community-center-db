@@ -78,6 +78,14 @@
         </form>
         <hr />
 
+        <h2>How many classes does each Instructor Lead?</h2>
+        <h6>Aggregation: Groups Class_Leads by eID, displays COUNT</h6>
+        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="aggregateGroupByRequest" name="aggregateGroupByRequest">
+            <input class="submit-button" type="submit" value="Query" name="aggregateGroupBySubmit">
+        </form>
+        <hr />
+
         <h2>Show Details of Classes</h2>
         <h6>Projection: Show these attributes of Class_Leads</h6>
         <form method="POST" action="cc.php">
@@ -254,8 +262,17 @@
             $hourlyRate = $_POST['hourlyRate'];
 
             // you need the wrap the pay, specialization and eID values with single quotations
-            $result = executePlainSQL("UPDATE Front_Desk_Staff SET hourlyRate='" . $hourlyRate . "' WHERE eID='" . $eID . "'");
-            printFront_Desk_Staff($result);
+            executePlainSQL("UPDATE Front_Desk_Staff SET hourlyRate='" . $hourlyRate . "' WHERE eID='" . $eID . "'");
+            
+            echo "<br>Retrieved from Front_Desk_Staff:<br>";
+            echo "<table>";
+            echo "<tr><th>eID</th><th>hourlyRate</th></tr>";
+            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; //or just use "echo $row[0]"; 
+            }
+
+            echo "</table>";
+            
             OCICommit($db_conn);
         }
 
@@ -304,6 +321,20 @@
             if (($row = oci_fetch_row($result)) != false) {
                 echo "<br>Front desk staff average hourly rate:". "<br> CAD " . round($row[0], 2) . "<br>";
             }
+        }
+
+        function handleAggregationGroupByRequest() {
+            global $db_conn;
+
+            $result = executePlainSQL("SELECT CL.eID, COUNT(*) FROM Class_Leads CL GROUP BY CL.eID");
+
+            echo "<br>Retrieved from Class_Leads:<br>";
+            echo "<table>";
+            echo "<tr><th>eID</th><th>Classes Led</th></tr>";
+            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; //or just use "echo $row[0]"; 
+            }
+            echo "</table>";
         }
 
         function handleDisplayRequest() {
@@ -393,9 +424,12 @@
                     handleAggregationRequest();
                 } else if (array_key_exists('displayTuples', $_GET)) {
                     handleDisplayRequest();
-                } else if (array_key_exists('divisionRequest', $_GET))
+                } else if (array_key_exists('divisionRequest', $_GET)) {
                     handleDivisionRequest();
-
+                } else if (array_key_exists('aggregateGroupByRequest', $_GET)) {
+                    handleAggregationGroupByRequest();
+                }
+                    
                 disconnectFromDB();
             }
         }
@@ -404,7 +438,7 @@
         || isset($_POST['insertSubmit']) || isset($_POST['selectionSubmit']) 
         || isset($_POST['projectionSubmit']) || isset($_POST['deleteSubmit'])) {
             handlePOSTRequest();
-        } else if (isset($_GET['aggregateTupleRequest']) || isset($_GET['displayTupleRequest'])  || isset($_GET['divisionSubmit'])) {
+        } else if (isset($_GET['aggregateTupleRequest']) || isset($_GET['displayTupleRequest'])  || isset($_GET['divisionSubmit']) || isset($_GET['aggregateGroupBySubmit'])) {
             handleGETRequest();
         }
 		?>
