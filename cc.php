@@ -1,31 +1,9 @@
-
-
-
-
-<!--Test Oracle file for UBC CPSC304 2018 Winter Term 1
-  Created by Jiemin Zhang
-  Modified by Simona Radu
-  Modified by Jessica Wong (2018-06-22)
-  This file shows the very basics of how to execute PHP commands
-  on Oracle.  
-  Specifically, it will drop a table, create a table, insert values
-  update values, and then query for values
- 
-  IF YOU HAVE A TABLE CALLED "demoTable" IT WILL BE DESTROYED
-
-  The script assumes you already have a server set up
-  All OCI commands are commands to the Oracle libraries
-  To get the file to work, you must place it somewhere where your
-  Apache server can run it, and you must rename it to have a ".php"
-  extension.  You must also change the username and password on the 
-  OCILogon below to be your ORACLE username and password -->
-
   <html>
     <head>
         <title>CPSC 304 Community Centre Database</title>
         <link rel="stylesheet" href="https://www.students.cs.ubc.ca/~sarahn26/ccstyles.css">
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap" rel="stylesheet"> 
     </head>
 
     <body>
@@ -34,93 +12,77 @@
           <h1>📊 Community Centre Management Tool</h1>
         </div>
         <div class="app-bar-content">
-          <p>Test</p>
+          <div class="nav-button"><a href="#employee">👥 Employee</a></div>
+          <div class="nav-button"><a href="#class">📚 Class</a></div>
+          <div class="nav-button"><a href="#employee">...</a></div>
         </div>
       </div>
       <div class="row">
       
       <div>
-        <!-- <h2>Reset</h2>
-        <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
-
-        <form method="POST" action="cc.php">
-      
-            <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
-            <p><input type="submit" value="Reset" name="reset"></p>
-        </form>
-
-        <hr /> -->
-
-        <h2>Insert Values into Employee</h2>
+        <h2 id="employee">Add New Employee</h2>
+        <h6>Insert Values into Employee</h6>
         <form method="POST" action="cc.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-            Employee ID: <input type="number" min="0" step="1" name="eID"> <br /><br />
-            First Name: <input type="text" name="firstName"> <br /><br />
-            Last Name: <input type="text" name="lastName"> <br /><br />
-
-            <input type="submit" value="Insert" name="insertSubmit"></p>
+            <input type="number" min="0" step="1" name="eID" placeholder="Employee ID"> 
+            <input type="text" name="firstName" placeholder="First Name"> 
+            <input type="text" name="lastName" placeholder="Last Name">
+            <input class="submit-button" type="submit" value="Insert" name="insertSubmit">
         </form>
 
         <hr />
 
-        <h2>Delete a class</h2>
+        <h2 id="class">Delete a class</h2>
+        <h6>Remove a class with user provided class name</h6>
         <form method="POST" action="cc.php"> <!--refresh page when submitted-->
             <input type="hidden" id="deleteQueryRequest" name="deleteQueryRequest">
-            Class name: <input type="text" name="className"> <br /><br />
-            <input type="submit" value="Delete" name="deleteSubmit"></p>
+            <input type="text" name="className" placeholder="Class Name (exact)">
+            <input class="submit-button" type="submit" value="Delete" name="deleteSubmit">
         </form>
 
         <hr />
 
-        <h2>Update Name in DemoTable</h2>
-        <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
-
-        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-            Old Name: <input type="text" name="oldName"> <br /><br />
-            New Name: <input type="text" name="newName"> <br /><br />
-
-            <input type="submit" value="Update" name="updateSubmit"></p>
-        </form>
-
-        <hr />
-
-        <h2>Update: Specific instructor for classID 301 on 2020-10-26</h2>
+        <h2>Update Instructor Details</h2>
+        <h6>Update a specific instructor for classID 301 on 2020-10-26</h6>
         <form method="POST" action="cc.php"> <!--refresh page when submitted-->
             <input type="hidden" id="updateQueryRequestInstructor" name="updateQueryRequestInstructor">
-            Pay: <input type="real" min="0.00" name="Pay"> <br /><br />
-            Specialization: <input type="text" name="Specialization"> <br /><br />
-            <input type="submit" value="Update" name="updateSubmit"></p>
+            <input type="real" min="0.00" name="Pay" placeholder="Program Rate in CAD"> 
+            <input type="text" name="Specialization" placeholder="Specialization">
+            <input class="submit-button" type="submit" value="Update" name="updateSubmit">
         </form>
         
         <hr />
-        <h2>Aggregation: Calculate the average hourly rate for front desk employees</h2>
+        <h2>Front Desk Staff Average Hourly Rate</h2>
+        <h6>Aggregation Calculate the average hourly rate for front desk employees</h6>
         <form method="GET" action="cc.php"> <!--refresh page when submitted-->
             <input type="hidden" id="aggregateTupleRequest" name="aggregateTupleRequest">
-            <input type="submit" name="aggregateTuples"></p>
+            <input class="submit-button" type="submit" name="aggregateTuples">
         </form>
         <hr />
 
-        <h2>Display the Tuples in Employee</h2>
+        <h2>Show All Employees</h2>
+        <h6>Display all tuples in table Employee</h6>
         <form method="GET" action="cc.php"> <!--refresh page when submitted-->
             <input type="hidden" id="displayTupleRequest" name="displayTupleRequest">
-            <input type="submit" name="displayTuples"></p>
+            <input class="submit-button" type="submit" name="displayTuples">
         </form>
         <hr />
 
-        <h2>Selection: Find Employees with</h2>
+        <h2>Look Up An Employees</h2>
+        <h6>Selection: Find Employees with eID smaller than some integer AND last name string match</h6>
         <form method="POST" action="cc.php"> <!--refresh page when submitted-->
             <input type="hidden" id="selectionRequest" name="selectionRequest">
-            Employee ID <= <input type="number" min="0" step="1" name="eID"> AND <br /><br />
-            Last Name starts with the letter: <input type="text" name="lastName"> <br /><br />
-            <input type="submit" value="Query" name="selectionSubmit"></p>
+            <input type="number" min="0" step="1" name="eID" placeholder="Employee ID smaller than"> AND
+            <input type="text" name="lastName" placeholder="Last Name starts with the character...">
+            <input class="submit-button" type="submit" value="Query" name="selectionSubmit">
         </form>
         <hr />
 
-        <h2>Projection: Show these attributes of Class_Leads</h2>
+        <h2>Show Details of Classes</h2>
+        <h6>Projection: Show these attributes of Class_Leads</h6>
         <form method="POST" action="cc.php">
             <input type="hidden" id="projectionRequest" name="projectionRequest">
-            <select name="projection_list1" id="projection_list1"> <br /><br />
+            <select name="projection_list1" id="projection_list1">
                 <option value="classID">classID</option>
                 <option value="date">date</option>
                 <option value="memberDiscount">memberDiscount</option>
@@ -129,7 +91,7 @@
                 <option value="maxSpots">maxSpots</option>
                 <option value="eID">eID</option>
             </select>
-            <select name="projection_list2" id="projection_list2"> <br /><br />
+            <select name="projection_list2" id="projection_list2">
                 <option value="classID">classID</option>
                 <option value="date">date</option>
                 <option value="memberDiscount">memberDiscount</option>
@@ -138,7 +100,7 @@
                 <option value="maxSpots">maxSpots</option>
                 <option value="eID">eID</option>
             </select>
-            <select name="projection_list3" id="projection_list3"> <br /><br />
+            <select name="projection_list3" id="projection_list3">
                 <option value="classID">classID</option>
                 <option value="date">date</option>
                 <option value="memberDiscount">memberDiscount</option>
@@ -147,14 +109,15 @@
                 <option value="maxSpots">maxSpots</option>
                 <option value="eID">eID</option>
             </select>
-            <input type="submit" value="Query" name="projectionSubmit"></p>
+            <input class="submit-button" type="submit" value="Query" name="projectionSubmit">
         </form>
         <hr />
 
-        <h2>Division: Who takes all the classes?</h2>
+        <h2>Who takes all the classes?</h2>
+        <h6>Division: Find the customers that take all the classes</h6>
         <form method="GET" action="cc.php">
             <input type="hidden" id="divisionRequest" name="divisionRequest">
-            <input type="submit" name="divisionSubmit"></p>
+            <input class="submit-button" type="submit" name="divisionSubmit">
         </form>
       </div>
       <div id="result">
