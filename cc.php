@@ -80,9 +80,9 @@
 
         <h2>How many classes does each Instructor Lead?</h2>
         <h6>Aggregation: Groups Class_Leads by eID, displays COUNT</h6>
-        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
+        <form method="GET" action="cc.php"> <!--refresh page when submitted-->
             <input type="hidden" id="aggregateGroupByRequest" name="aggregateGroupByRequest">
-            <input class="submit-button" type="submit" value="Query" name="aggregateGroupBySubmit">
+            <input class="submit-button" type="submit" value="Query" name="aggregateTupleRequest">
         </form>
         <hr />
 
@@ -225,18 +225,6 @@
             echo "</table>";
         }
 
-        function printFront_Desk_Staff($result) {
-            echo "<br>Retrieved from Front_Desk_Staff:<br>";
-            echo "<table>";
-            echo "<tr><th>eID</th><th>hourlyRate</th></tr>";
-            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
-                echo "<tr><td>" . $row["EID"] . "</td><td>" . $row["HOURLYRATE"] . "</td></tr>"; //or just use "echo $row[0]"; 
-            }
-
-            echo "</table>";
-        }
-
-
         function connectToDB() {
             global $db_conn;
 
@@ -375,27 +363,27 @@
             }
         }
 
-        function handleJoinRequest() {
-            global $db_conn;
+        // function handleJoinRequest() {
+        //     global $db_conn;
 
-            $eID = $POST['eID'];
+        //     $eID = $POST['eID'];
 
-            // you need the wrap the pay, specialization and eID values with single quotations
-            $result = executePlainSQL("SELECT DISTINCT C.firstName, C.lastName FROM Customer C, Takes T, Class_Leads CL WHERE eID='" . $eID . "'" AND T.email = C.email AND T.classID = CL.classID);
+        //     // you need the wrap the pay, specialization and eID values with single quotations
+        //     $result = executePlainSQL("SELECT DISTINCT C.firstName, C.lastName FROM Customer C, Takes T, Class_Leads CL WHERE eID='" . $eID . "'" AND T.email = C.email AND T.classID = CL.classID);
             
-            echo "<br>Retrieved from Join:<br>";
-            echo "<table>";
-            echo "<tr><th>firstName</th><th>lastName</th></tr>";
-            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
-                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; //or just use "echo $row[0]"; 
-            }
+        //     echo "<br>Retrieved from Join:<br>";
+        //     echo "<table>";
+        //     echo "<tr><th>firstName</th><th>lastName</th></tr>";
+        //     while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
+        //         echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; //or just use "echo $row[0]"; 
+        //     }
 
-            echo "</table>";
+        //     echo "</table>";
             
-            OCICommit($db_conn);
+        //     OCICommit($db_conn);
 
             
-        }
+        // }
 
         function handleProjectionRequest() {
             global $db_conn;
@@ -471,7 +459,7 @@
         || isset($_POST['insertSubmit']) || isset($_POST['selectionSubmit']) 
         || isset($_POST['projectionSubmit']) || isset($_POST['deleteSubmit']) || isset($_POST['joinSubmit'])) {
             handlePOSTRequest();
-        } else if (isset($_GET['aggregateTupleRequest']) || isset($_GET['displayTupleRequest'])  || isset($_GET['divisionSubmit']) || isset($_GET['aggregateGroupBySubmit'])) {
+        } else if (isset($_GET['aggregateTupleRequest']) || isset($_GET['displayTupleRequest'])  || isset($_GET['divisionSubmit'])) {
             handleGETRequest();
         }
 		?>
