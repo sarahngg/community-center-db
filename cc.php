@@ -90,7 +90,7 @@
         <h6>Join: Joins Takes, Customer, and Class_Leads</h6>
         <form method="POST" action="cc.php"> <!--refresh page when submitted-->
             <input type="hidden" id="joinRequest" name="joinRequest">
-            <input type="number" min="0" step="1" name="eID" placeholder="Instructor ID"> 
+            <input type="int" min="0" step="1" name="eID" placeholder="Instructor ID"> 
             <input class="submit-button" type="submit" value="Query" name="joinSubmit">
         </form>
         <hr />
@@ -366,10 +366,11 @@
         // function handleJoinRequest() {
         //     global $db_conn;
 
-        //     $eID = $POST['eID'];
+        //     $eID = $_POST['eID'];
 
         //     // you need the wrap the pay, specialization and eID values with single quotations
-        //     $result = executePlainSQL("SELECT DISTINCT C.firstName, C.lastName FROM Customer C, Takes T, Class_Leads CL WHERE eID='" . $eID . "'" AND T.email = C.email AND T.classID = CL.classID);
+        //     $result = executePlainSQL("SELECT DISTINCT C.firstName as FN, C.lastName as LN FROM Customer C, Takes T, Class_Leads CL 
+        //     WHERE eID='" . $eID . "'" AND T.email = C.email AND T.classID = CL.classID);
             
         //     echo "<br>Retrieved from Join:<br>";
         //     echo "<table>";
@@ -377,12 +378,9 @@
         //     while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
         //         echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; //or just use "echo $row[0]"; 
         //     }
-
         //     echo "</table>";
             
-        //     OCICommit($db_conn);
-
-            
+        //     OCICommit($db_conn); 
         // }
 
         function handleProjectionRequest() {
