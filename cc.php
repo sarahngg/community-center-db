@@ -85,6 +85,15 @@
 
         <hr />
 
+        <h2>Update: Specific instructor for classID 301 on 2020-10-26</h2>
+        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="updateQueryRequestInstructor" name="updateQueryRequestInstructor">
+            Pay: <input type="real" min="0.00" name="Pay"> <br /><br />
+            Specialization: <input type="text" name="Specialization"> <br /><br />
+            <input type="submit" value="Update" name="updateSubmit"></p>
+        </form>
+        
+        <hr />
         <h2>Aggregation: Calculate the average hourly rate for front desk employees</h2>
         <form method="GET" action="cc.php"> <!--refresh page when submitted-->
             <input type="hidden" id="aggregateTupleRequest" name="aggregateTupleRequest">
@@ -235,10 +244,22 @@
             echo "</table>";
         }
 
+        function printResultInstructor($result) { //prints results from a select statement
+            echo "<br>Retrieved data from table Instructor:<br>";
+            echo "<table>";
+            echo "<tr><th>eID</th><th>programRate</th><th>Specialization</th></tr>";
+            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
+                echo "<tr><td>" . $row["EID"] . "</td><td>" . $row["PROGRAMRATE"] . "</td><td>" . $row["SPECIALIZATION"] . "</td></tr>"; //or just use "echo $row[0]"; 
+            }
+
+            echo "</table>";
+        }
+
         function connectToDB() {
             global $db_conn;
 
             // Your username is ora_(CWL_ID) and the password is a(student number). For example, 
+
             // ora_platypus is the username and a12345678 is the password.
             // $db_conn = OCILogon("ora_cwl", "password", "dbhost.students.cs.ubc.ca:1522/stu");
             $db_conn = OCILogon("ora_cwl", "password", "dbhost.students.cs.ubc.ca:1522/stu");
@@ -269,6 +290,19 @@
 
             // you need the wrap the old name and new name values with single quotations
             executePlainSQL("UPDATE demoTable SET name='" . $new_name . "' WHERE name='" . $old_name . "'");
+            OCICommit($db_conn);
+        }
+
+        function handleUpdateRequestInstructor() {
+            global $db_conn;
+
+            $pay = $_POST['Pay'];
+            $specialization = $_POST['Specialization'];
+
+            // you need the wrap the pay, specialization and eID values with single quotations
+            executePlainSQL("UPDATE Instructor SET programRate='" . $pay . "', Specialization='" . $specialization . "' WHERE eID='" . 88 . "'");
+            $result = executePlainSQL("SELECT * FROM Instructor");
+            printResultInstructor($result);
             OCICommit($db_conn);
         }
 
@@ -393,7 +427,9 @@
                     handleSelectionRequest();
                 } else if (array_key_exists('projectionRequest', $_POST)) {
                     handleProjectionRequest();
-                } 
+                } else if (array_key_exists('updateQueryRequestInstructor', $_POST)) {
+                    handleUpdateRequestInstructor();
+                }
                 disconnectFromDB();
             }
         }
