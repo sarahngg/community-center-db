@@ -259,15 +259,15 @@
             $hourlyRate = $_POST['hourlyRate'];
 
             // you need the wrap the pay, specialization and eID values with single quotations
-            $result = executePlainSQL("UPDATE Front_Desk_Staff SET hourlyRate='" . $hourlyRate . "' WHERE eID='" . $eID . "'");
-            
-            echo "<br>Retrieved from Front_Desk_Staff:<br>";
+            executePlainSQL("UPDATE Front_Desk_Staff SET hourlyRate='" . $hourlyRate . "' WHERE eID='" . $eID . "'");
+            $result = executePlainSQL("SELECT F.eID as ID, E.FIRSTNAME as FN, E.LASTNAME as LN, F.HOURLYRATE as RATE 
+            FROM Front_Desk_Staff F, EMPLOYEE E WHERE F.eID = E.eID AND F.eID='" . $eID . "'");
+            echo "<br>Updated staff hourly rate<br>";
             echo "<table>";
-            echo "<tr><th>eID</th><th>hourlyRate</th></tr>";
+            echo "<tr><th>eID</th><th>firstName</th><th>lastName</th><th>hourlyRate</th></tr>";
             while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
-                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; //or just use "echo $row[0]"; 
+                echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["FN"] . "</td><td>" . $row["LN"] . "</td><td>" . $row["RATE"] ."</td></tr>";
             }
-
             echo "</table>";
             
             OCICommit($db_conn);
