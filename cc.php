@@ -393,13 +393,6 @@
             echo "</table>";
         }
 
-        function handleDisplayRequest() {
-            global $db_conn;
-            $result = executePlainSQL("SELECT * FROM Employee");
-            console.log($result);
-            printResult($result);
-        }
-
         function handleSelectionRequest() {
             global $db_conn;
 
