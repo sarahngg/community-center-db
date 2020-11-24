@@ -482,7 +482,7 @@
           $count = 0;
           while (($row = OCI_Fetch_Array($header, OCI_BOTH)) != false) {
               echo "<th>" . $row[0] . "</th>";
-              if ($row[0] == 'date' || $row[0] == 'name') {
+              if ($row[0] == 'date' || $row[0] == 'name' || $row[0] == 'certificate') {
                 $row[0] = '"' . $row[0] . '"' ;
               }
               if ( $count < 1 ) {
