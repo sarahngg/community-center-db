@@ -81,6 +81,8 @@ hr {
   margin-left: auto;
   margin-right: auto;
   width: 60%;
+  padding-left: 3rem;
+  padding-right: 2rem;
 }
 
 #result > table {
@@ -110,7 +112,7 @@ form > * {
 }
 
 .grow-2 {
-  flex-grow: 2;
+  flex-grow: 3;
 }
 
 #app-bar {
@@ -159,10 +161,20 @@ a {
 
 .full-width {
   font-size: 0.85rem;
+  width: 100%;
 }
+
+tr:nth-child(odd) {
+  background: #f3f3f3;
+} 
 
 td {
   text-align: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  white-space: nowrap;
+}
+
+table, th, td, tr { 
+  border-width: 0; 
 }
