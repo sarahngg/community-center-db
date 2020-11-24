@@ -1,3 +1,8 @@
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   font-size: 1rem;
@@ -6,22 +11,38 @@ body {
 
 h1 {
   color: #ffffff;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: bolder;
 }
 
 h2 {
   color: #0097a7;
   font-size: 1.25rem;
+  font-weight: bolder;
+  margin-bottom: 0.125rem;
+}
+
+h6 {
+  color: #888888;
+  font-size: 0.75rem;
+  font-weight: normal;
+  margin: 0;
+}
+
+.submit-button {
+  padding: 0.25rem 0.75rem 0.25rem 0.75rem;
+  text-align: center;
+  align-self: flex-start;
 }
 
 input {
-  height: 1.5rem;
+  min-height: 2rem;
   font-family: inherit;
   border-style: none;
   border-radius: 0.25rem;
   background-color: #e0f7fa;
   color: #0097a7;
-  padding: 0.25rem;
+  padding: 0.25rem 0.75rem 0.25rem 0.75rem;
   vertical-align: middle;
 }
 
@@ -29,6 +50,22 @@ input:hover {
   background-color: #0097a7;
   color: #fbfbfb;
 }
+
+select {
+  border-radius: 0.25rem;
+  min-height: 2rem;
+  border-style: none;
+  font-family: inherit;
+  background-color: #f0f0f0;
+  padding: 0.25rem 0.75rem 0.25rem 0.75rem;
+  vertical-align: middle;
+}
+
+select > option {
+  font-family: inherit;
+  padding: 0.25rem 0.75rem 0.25rem 0.75rem;
+}
+
 
 hr {
   color: #fbfbfb;
@@ -51,10 +88,29 @@ hr {
   margin-right: auto;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 20rem;
+}
+
+form > * {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
 .row {
   display: flex;
   margin-top: 4rem;
   margin-left: 3rem;
+}
+
+.grow-1 {
+  flex-grow: 1;
+}
+
+.grow-2 {
+  flex-grow: 2;
 }
 
 #app-bar {
@@ -73,12 +129,40 @@ hr {
   min-height: 4rem;
   padding-left: 2rem;
   padding-right: 2rem;
+  justify-content: space-between;
+}
+
+.nav-button {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+a {
+  text-decoration: none;
+  color: #bae5eb;
 }
 
 .app-bar-content {
   display: flex;
   position: relative;
   align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+:target::before {
+  content: "";
+  display: block;
+  height: 4.5rem; /* fixed header height*/
+  margin: -4.5rem 0 0; /* negative fixed header height */
+}
+
+.full-width {
+  font-size: 0.85rem;
+}
+
+td {
+  text-align: center;
   padding-left: 1rem;
   padding-right: 1rem;
 }
