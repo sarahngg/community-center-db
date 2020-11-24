@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="row">
-      <div>
+      <div class="grow-1">
         <h2>Show All Data</h2>
         <h6>Display all tuples in a table</h6>
         <form method="GET" action="cc.php"> <!--refresh page when submitted-->
@@ -159,7 +159,7 @@
             <input class="submit-button" type="submit" name="aggregateHavingSubmit">
         </form>
       </div>
-      <div id="result">
+      <div id="result" class="grow-2">
         <?php
 		//this tells the system that it's no longer just parsing html; it's now parsing PHP
 
@@ -456,13 +456,22 @@
           echo "<br>Display all tuples from $table_list:<br>";
           echo "<table class='full-width'>";
           echo "<tr>";
+          $attributes = "";
           $count = 0;
           while (($row = OCI_Fetch_Array($header, OCI_BOTH)) != false) {
               echo "<th>" . $row[0] . "</th>";
+              if ($row[0] == 'date') {
+                $row[0] = '"' . $row[0] . '"' ;
+              }
+              if ( $count < 1 ) {
+                $attributes .= $row[0];
+              } else {
+                $attributes .= ", " . $row[0];
+              }
               $count++;
           }
           echo "</tr>";
-          $result = executePlainSQL("SELECT * FROM $table_list");
+          $result = executePlainSQL("SELECT $attributes FROM $table_list");
           while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
             echo "<tr>";
             $tempcount = 0;
