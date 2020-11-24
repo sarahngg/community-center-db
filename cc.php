@@ -336,7 +336,7 @@
           global $db_conn;
           $className = $_POST['className'];
           // you need the wrap the eID and lastName values with single quotations
-          $result = executePlainSQL("DELETE FROM Class_Leads WHERE className <='" . $className . "'");
+          $result = executePlainSQL("DELETE FROM Class_Leads WHERE className ='" . $className . "'");
           OCICommit($db_conn);
       }
 
