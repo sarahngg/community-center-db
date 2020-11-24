@@ -73,7 +73,7 @@
         <hr />
 
         <h2>Look Up An Employee</h2>
-        <h6>Selection: Find Employees with eID smaller than some integer AND last name string match</h6>
+        <h6>Selection: Find Employees with eID smaller than or equal to some integer AND last name string match</h6>
         <form method="POST" action="cc.php"> <!--refresh page when submitted-->
             <input type="hidden" id="selectionRequest" name="selectionRequest">
             <input type="number" min="0" step="1" name="eID" placeholder="Employee ID smaller than"> AND
