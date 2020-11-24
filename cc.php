@@ -42,12 +42,12 @@
 
         <hr />
 
-        <h2>Update Instructor Details</h2>
-        <h6>Update a specific instructor for classID 301 on 2020-10-26</h6>
+        <h2>Update Front-Desk Staff Wages </h2>
+        <h6>Update a specific front desk staff's wages</h6>
         <form method="POST" action="cc.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="updateQueryRequestInstructor" name="updateQueryRequestInstructor">
-            <input type="real" min="0.00" name="Pay" placeholder="Program Rate in CAD"> 
-            <input type="text" name="Specialization" placeholder="Specialization">
+            <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
+            <input type="int" name="eID" placeholder="Employee ID"> 
+            <input type="real" min="0.00" name="hourlyRate" placeholder="New Wage">
             <input class="submit-button" type="submit" value="Update" name="updateSubmit">
         </form>
         
@@ -75,6 +75,23 @@
             <input type="number" min="0" step="1" name="eID" placeholder="Employee ID smaller than"> AND
             <input type="text" name="lastName" placeholder="Last Name starts with the character...">
             <input class="submit-button" type="submit" value="Query" name="selectionSubmit">
+        </form>
+        <hr />
+
+        <h2>How many classes does each Instructor Lead?</h2>
+        <h6>Aggregation: Groups Class_Leads by eID, displays COUNT</h6>
+        <form method="GET" action="cc.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="aggregateGroupByRequest" name="aggregateGroupByRequest">
+            <input class="submit-button" type="submit" value="Query" name="aggregateTupleRequest">
+        </form>
+        <hr />
+
+        <h2>Full Names of all Customers who took class with specific instructor</h2>
+        <h6>Join: Joins Takes, Customer, and Class_Leads</h6>
+        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="joinRequest" name="joinRequest">
+            <input type="int" min="0" step="1" name="eID" placeholder="Instructor ID"> 
+            <input class="submit-button" type="submit" value="Query" name="joinSubmit">
         </form>
         <hr />
 
@@ -204,23 +221,13 @@
             }
         }
 
+        // General print function; useful to look at for help!
         function printResult($result) { //prints results from a select statement
             echo "<br>Retrieved from Employee:<br>";
             echo "<table>";
             echo "<tr><th>eID</th><th>firstName</th><th>lastName</th></tr>";
             while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
                 echo "<tr><td>" . $row["EID"] . "</td><td>" . $row["FIRSTNAME"] . "</td><td>" . $row["LASTNAME"] . "</td></tr>"; //or just use "echo $row[0]"; 
-            }
-
-            echo "</table>";
-        }
-
-        function printResultInstructor($result) { //prints results from a select statement
-            echo "<br>Retrieved data from table Instructor:<br>";
-            echo "<table>";
-            echo "<tr><th>eID</th><th>programRate</th><th>Specialization</th></tr>";
-            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
-                echo "<tr><td>" . $row["EID"] . "</td><td>" . $row["PROGRAMRATE"] . "</td><td>" . $row["SPECIALIZATION"] . "</td></tr>"; //or just use "echo $row[0]"; 
             }
 
             echo "</table>";
@@ -256,24 +263,21 @@
         function handleUpdateRequest() {
             global $db_conn;
 
-            $old_name = $_POST['oldName'];
-            $new_name = $_POST['newName'];
-
-            // you need the wrap the old name and new name values with single quotations
-            executePlainSQL("UPDATE demoTable SET name='" . $new_name . "' WHERE name='" . $old_name . "'");
-            OCICommit($db_conn);
-        }
-
-        function handleUpdateRequestInstructor() {
-            global $db_conn;
-
-            $pay = $_POST['Pay'];
-            $specialization = $_POST['Specialization'];
+            $eID = $_POST['eID'];
+            $hourlyRate = $_POST['hourlyRate'];
 
             // you need the wrap the pay, specialization and eID values with single quotations
-            executePlainSQL("UPDATE Instructor SET programRate='" . $pay . "', Specialization='" . $specialization . "' WHERE eID='" . 88 . "'");
-            $result = executePlainSQL("SELECT * FROM Instructor");
-            printResultInstructor($result);
+            executePlainSQL("UPDATE Front_Desk_Staff SET hourlyRate='" . $hourlyRate . "' WHERE eID='" . $eID . "'");
+            $result = executePlainSQL("SELECT F.eID as ID, E.FIRSTNAME as FN, E.LASTNAME as LN, F.HOURLYRATE as RATE 
+            FROM Front_Desk_Staff F, EMPLOYEE E WHERE F.eID = E.eID AND F.eID='" . $eID . "'");
+            echo "<br>Updated staff hourly rate<br>";
+            echo "<table>";
+            echo "<tr><th>eID</th><th>firstName</th><th>lastName</th><th>hourlyRate</th></tr>";
+            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
+                echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["FN"] . "</td><td>" . $row["LN"] . "</td><td>" . $row["RATE"] ."</td></tr>";
+            }
+            echo "</table>";
+            
             OCICommit($db_conn);
         }
 
@@ -324,6 +328,20 @@
             }
         }
 
+        function handleAggregationGroupByRequest() {
+            global $db_conn;
+
+            $result = executePlainSQL("SELECT CL.eID, COUNT(*) FROM Class_Leads CL GROUP BY CL.eID");
+
+            echo "<br>Retrieved from Class_Leads:<br>";
+            echo "<table>";
+            echo "<tr><th>eID</th><th>Classes Led</th></tr>";
+            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; //or just use "echo $row[0]"; 
+            }
+            echo "</table>";
+        }
+
         function handleAggregationHavingRequest() {
             global $db_conn;
 
@@ -332,6 +350,7 @@
             echo "<br>Max total spots for instructors that teach multiple classes:<br>";
             echo "<table>";
             echo "<tr><th>eID</th><th>Total spots available</th></tr>";
+
             while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
                 echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; //or just use "echo $row[0]"; 
             }
@@ -365,6 +384,26 @@
             if (($row = oci_fetch_row($result)) != false) {
                 echo "<br>Our number one fan:". "<br>" . $row[0] . "<br>";
             }
+        }
+
+        function handleJoinRequest() {
+            global $db_conn;
+
+            $eID = $_POST['eID'];
+
+            // you need the wrap the pay, specialization and eID values with single quotations
+            $result = executePlainSQL("SELECT DISTINCT C.firstName as FN, C.lastName as LN FROM Customer C, Takes T, Class_Leads CL 
+            WHERE eID='" . $eID . "' AND T.email = C.email AND T.classID = CL.classID");
+            
+            echo "<br>Retrieved from Join:<br>";
+            echo "<table>";
+            echo "<tr><th>firstName</th><th>lastName</th></tr>";
+            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; //or just use "echo $row[0]"; 
+            }
+            echo "</table>";
+            
+            OCICommit($db_conn); 
         }
 
         function handleProjectionRequest() {
@@ -412,8 +451,8 @@
                     handleSelectionRequest();
                 } else if (array_key_exists('projectionRequest', $_POST)) {
                     handleProjectionRequest();
-                } else if (array_key_exists('updateQueryRequestInstructor', $_POST)) {
-                    handleUpdateRequestInstructor();
+                } else if (array_key_exists('joinRequest', $_POST)) {
+                    handleJoinRequest();
                 }
                 disconnectFromDB();
             }
@@ -427,8 +466,10 @@
                     handleAggregationRequest();
                 } else if (array_key_exists('displayTuples', $_GET)) {
                     handleDisplayRequest();
-                } else if (array_key_exists('divisionRequest', $_GET)){
+                } else if (array_key_exists('divisionRequest', $_GET)) {
                     handleDivisionRequest();
+                } else if (array_key_exists('aggregateGroupByRequest', $_GET)) {
+                    handleAggregationGroupByRequest();
                 } else if (array_key_exists('aggregateHavingRequest', $_GET)) {
                     handleAggregationHavingRequest();
                 }
@@ -439,7 +480,7 @@
 
     if (isset($_POST['reset']) || isset($_POST['updateSubmit']) 
         || isset($_POST['insertSubmit']) || isset($_POST['selectionSubmit']) 
-        || isset($_POST['projectionSubmit']) || isset($_POST['deleteSubmit'])) {
+        || isset($_POST['projectionSubmit']) || isset($_POST['deleteSubmit']) || isset($_POST['joinSubmit'])) {
             handlePOSTRequest();
         } else if (isset($_GET['aggregateTupleRequest']) || isset($_GET['displayTupleRequest'])  || isset($_GET['divisionSubmit'])  || isset($_GET['aggregateHavingSubmit'])) {
             handleGETRequest();
