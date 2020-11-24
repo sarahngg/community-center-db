@@ -1,4 +1,4 @@
-  <html>
+<html>
     <head>
         <title>CPSC 304 Community Centre Database</title>
         <link rel="stylesheet" href="https://www.students.cs.ubc.ca/~sarahn26/ccstyles.css">
@@ -18,8 +18,30 @@
         </div>
       </div>
       <div class="row">
-      
       <div>
+        <h2>Show All Data</h2>
+        <h6>Display all tuples in a table</h6>
+        <form method="GET" action="cc.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="displayTupleRequest" name="displayTupleRequest">
+              <select name="table_list" id="table_list">
+              <option value="Takes">Takes</option>
+              <option value="Process_Purchase_Membership">Process_Purchase_Membership</option>
+              <option value="Uses">Uses</option>
+              <option value="Has_Room_Booking">Has_Room_Booking</option>
+              <option value="Workshop">Workshop</option>
+              <option value="Lesson">Lesson</option>
+              <option value="Front_Desk_Staff">Front_Desk_Staff</option>
+              <option value="Instructor">Instructor</option>
+              <option value="Pays_Payment">Pays_Payment</option>
+              <option value="Orders_Equipment">Orders_Equipment</option>
+              <option value="Class_Leads">Class_Leads</option>
+              <option value="Employee">Employee</option>
+              <option value="Customer">Customer</option>
+            </select>
+            <input class="submit-button" type="submit" name="displayTuples">
+        </form>
+        <hr />
+
         <h2 id="employee">Add New Employee</h2>
         <h6>Insert Values into Employee</h6>
         <form method="POST" action="cc.php"> <!--refresh page when submitted-->
@@ -57,14 +79,6 @@
         <form method="GET" action="cc.php"> <!--refresh page when submitted-->
             <input type="hidden" id="aggregateTupleRequest" name="aggregateTupleRequest">
             <input class="submit-button" type="submit" name="aggregateTuples">
-        </form>
-        <hr />
-
-        <h2>Show All Employees</h2>
-        <h6>Display all tuples in table Employee</h6>
-        <form method="GET" action="cc.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="displayTupleRequest" name="displayTupleRequest">
-            <input class="submit-button" type="submit" name="displayTuples">
         </form>
         <hr />
 
@@ -357,13 +371,6 @@
             echo "</table>";
         }
 
-        function handleDisplayRequest() {
-            global $db_conn;
-            $result = executePlainSQL("SELECT * FROM Employee");
-            console.log($result);
-            printResult($result);
-        }
-
         function handleSelectionRequest() {
             global $db_conn;
 
@@ -372,7 +379,14 @@
 
             // you need the wrap the eID and lastName values with single quotations
             $result = executePlainSQL("SELECT * FROM Employee WHERE eID<='" . $eID . "' AND lastName LIKE'" . $lastName . "%'");
-            printResult($result);
+            echo "<br>Retrieved from Employee:<br>";
+            echo "<table>";
+            echo "<tr><th>eID</th><th>firstName</th><th>lastName</th></tr>";
+            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
+                echo "<tr><td>" . $row["EID"] . "</td><td>" . $row["FIRSTNAME"] . "</td><td>" . $row["LASTNAME"] . "</td></tr>"; //or just use "echo $row[0]"; 
+            }
+
+            echo "</table>";
             OCICommit($db_conn);
         }
 
@@ -434,7 +448,32 @@
             echo "</table>";
             OCICommit($db_conn);
         }
-
+        
+        function handleDisplayRequest() {
+          global $db_conn;
+          $table_list = strtoupper ($_GET['table_list']);
+          $header = executePlainSQL("SELECT DISTINCT COLUMN_NAME FROM ALL_TAB_COLUMNS WHERE TABLE_NAME = '" . $table_list . "' ");
+          echo "<br>Display all tuples from $table_list:<br>";
+          echo "<table class='full-width'>";
+          echo "<tr>";
+          $count = 0;
+          while (($row = OCI_Fetch_Array($header, OCI_BOTH)) != false) {
+              echo "<th>" . $row[0] . "</th>";
+              $count++;
+          }
+          echo "</tr>";
+          $result = executePlainSQL("SELECT * FROM $table_list");
+          while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
+            echo "<tr>";
+            $tempcount = 0;
+            while ($tempcount < $count) {
+              echo "<td>" . $row[$tempcount] . "</td>"; //or just use "echo $row[0]"; 
+              $tempcount++;
+            }
+            echo "</tr>";
+          }
+          echo "</table>";
+      }
         // HANDLE ALL POST ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
         function handlePOSTRequest() {
