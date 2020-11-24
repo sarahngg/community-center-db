@@ -198,6 +198,11 @@ insert into Orders_Equipment values(43241, 6.99, 'Kiln', 568349684, 112, 42);
 insert into Orders_Equipment values(11267, 12.99, 'Meat Thermometer', 928832138, 442, 21);
 insert into Orders_Equipment values(64671, 19.99, 'Large Exercise Mat', 212530810, 31, 90);
 insert into Orders_Equipment values(64672, 15.00, 'Kindle Reader', 831551818, 82, 121);
+insert into Orders_Equipment values(64673, 19.99, 'Plates', 280775734, 112, 42); 
+insert into Orders_Equipment values(64674, 15.99, 'Bowls', 280775735, 112, 42);
+insert into Orders_Equipment values(64675, 59.99, 'Table', 280775736, 31, 90);
+insert into Orders_Equipment values(64676, 49.99, 'Chair', 280775737, 31, 90); 
+insert into Orders_Equipment values(64677, 25.00, 'Painting Canvas', 280775738, 82, 121); 
 
 insert into Pays_Payment values(date '2020-09-30', 432, 30, 323.30);
 insert into Pays_Payment values(date '2020-10-30', 433, 31, 290.00);
