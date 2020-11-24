@@ -13,8 +13,8 @@
         </div>
         <div class="app-bar-content">
           <div class="nav-button"><a href="#employee">👥 Employee</a></div>
-          <div class="nav-button"><a href="#class">📚 Class</a></div>
-          <div class="nav-button"><a href="#employee">...</a></div>
+          <div class="nav-button"><a href="#class">🤸‍♂️ Class</a></div>
+          <div class="nav-button"><a href="#ordering">🛒 Orders</a></div>
         </div>
       </div>
       <div class="row">
@@ -54,16 +54,6 @@
 
         <hr />
 
-        <h2 id="class">Delete a class</h2>
-        <h6>Remove a class with user provided class name</h6>
-        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="deleteQueryRequest" name="deleteQueryRequest">
-            <input type="text" name="className" placeholder="Class Name (exact)">
-            <input class="submit-button" type="submit" value="Delete" name="deleteSubmit">
-        </form>
-
-        <hr />
-
         <h2>Update Front-Desk Staff Wages </h2>
         <h6>Update a specific front desk staff's wages</h6>
         <form method="POST" action="cc.php"> <!--refresh page when submitted-->
@@ -92,24 +82,7 @@
         </form>
         <hr />
 
-        <h2>How many classes does each Instructor Lead?</h2>
-        <h6>Aggregation: Groups Class_Leads by eID, displays COUNT</h6>
-        <form method="GET" action="cc.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="aggregateGroupByRequest" name="aggregateGroupByRequest">
-            <input class="submit-button" type="submit" value="Query" name="aggregateTupleRequest">
-        </form>
-        <hr />
-
-        <h2>Full Names of all Customers who took class with specific instructor</h2>
-        <h6>Join: Joins Takes, Customer, and Class_Leads</h6>
-        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="joinRequest" name="joinRequest">
-            <input type="int" min="0" step="1" name="eID" placeholder="Instructor ID"> 
-            <input class="submit-button" type="submit" value="Query" name="joinSubmit">
-        </form>
-        <hr />
-
-        <h2>Show Details of Classes</h2>
+        <h2 id="class">Show Details of Classes</h2>
         <h6>Projection: Show these attributes of Class_Leads</h6>
         <form method="POST" action="cc.php">
             <input type="hidden" id="projectionRequest" name="projectionRequest">
@@ -144,6 +117,33 @@
         </form>
         <hr />
 
+        <h2>Delete a class</h2>
+        <h6>Remove a class with user provided class name</h6>
+        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="deleteQueryRequest" name="deleteQueryRequest">
+            <input type="text" name="className" placeholder="Class Name (exact)">
+            <input class="submit-button" type="submit" value="Delete" name="deleteSubmit">
+        </form>
+
+        <hr />
+
+        <h2>How many classes does each Instructor Lead?</h2>
+        <h6>Aggregation: Groups Class_Leads by eID, displays COUNT</h6>
+        <form method="GET" action="cc.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="aggregateGroupByRequest" name="aggregateGroupByRequest">
+            <input class="submit-button" type="submit" value="Query" name="aggregateTupleRequest">
+        </form>
+        <hr />
+
+        <h2>Full Names of all Customers who took class with specific instructor</h2>
+        <h6>Join: Joins Takes, Customer, and Class_Leads</h6>
+        <form method="POST" action="cc.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="joinRequest" name="joinRequest">
+            <input type="int" min="0" step="1" name="eID" placeholder="Instructor ID"> 
+            <input class="submit-button" type="submit" value="Query" name="joinSubmit">
+        </form>
+        <hr />
+
         <h2>Who takes all the classes?</h2>
         <h6>Division: Find the customers that take all the classes</h6>
         <form method="GET" action="cc.php">
@@ -160,7 +160,7 @@
         </form>
         <hr />
 
-        <h2>What is the average cost of items in orders with multiple items?</h2>
+        <h2 id="ordering">What is the average cost of items in orders with multiple items?</h2>
         <h6>Nested aggregation with GROUP BY: Find the average cost of items for each order number that has at least 2 items in that order.</h6>
         <form method="GET" action="cc.php">
             <input type="hidden" id="nestedAggregationRequest" name="nestedAggregationRequest">
