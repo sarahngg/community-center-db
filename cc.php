@@ -388,7 +388,7 @@
             echo "<table>";
             echo "<tr><th>orderNum</th><th>avgCost</th></tr>";
             while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
-                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; //or just use "echo $row[0]"; 
+                echo "<tr><td>" . $row[0] . "</td><td>" . round($row[1], 2) . "</td></tr>"; //or just use "echo $row[0]"; 
             }
             echo "</table>";
         }
