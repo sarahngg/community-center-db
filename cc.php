@@ -138,11 +138,19 @@
         </form>
         <hr />
 
-        <h2>What are the total spots available for instructors who teach multiple classes?</h2>
-        <h6>For each instructor that teaches more than 1 class, find the total number of spots available across all his/her classes.</h6>
+        <h2>How many total spots available for popular instructors?</h2>
+        <h6>Aggregation with HAVING: For each instructor that teaches more than 1 class, find the total number of spots available across all his/her classes</h6>
         <form method="GET" action="cc.php">
             <input type="hidden" id="aggregateHavingRequest" name="aggregateHavingRequest">
             <input class="submit-button" type="submit" name="aggregateHavingSubmit">
+        </form>
+        <hr />
+
+        <h2>What is the average cost of items in orders with multiple items?</h2>
+        <h6>Nested aggregation with GROUP BY: Find the average cost of items for each order number that has at least 2 items in that order.</h6>
+        <form method="GET" action="cc.php">
+            <input type="hidden" id="nestedAggregationRequest" name="nestedAggregationRequest">
+            <input class="submit-button" type="submit" name="nestedAggregationSubmit">
         </form>
       </div>
       <div id="result">
@@ -357,6 +365,19 @@
             echo "</table>";
         }
 
+        function handleNestedAggregationRequest() {
+            global $db_conn;
+             $result = executePlainSQL("SELECT O.orderNum, AVG(O.cost) as avgCost FROM Orders_Equipment O GROUP BY O.orderNum HAVING 1 < (SELECT COUNT(*) FROM Orders_Equipment O2 WHERE O.orderNum=O2.orderNum)");
+
+            echo "<br>Average cost of items for each order containing multiple items:<br>";
+            echo "<table>";
+            echo "<tr><th>orderNum</th><th>avgCost</th></tr>";
+            while (($row = OCI_Fetch_Array($result, OCI_BOTH)) != false) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; //or just use "echo $row[0]"; 
+            }
+            echo "</table>";
+        }
+
         function handleDisplayRequest() {
             global $db_conn;
             $result = executePlainSQL("SELECT * FROM Employee");
@@ -472,6 +493,8 @@
                     handleAggregationGroupByRequest();
                 } else if (array_key_exists('aggregateHavingRequest', $_GET)) {
                     handleAggregationHavingRequest();
+                } else if (array_key_exists('nestedAggregationRequest', $_GET)) {
+                    handleNestedAggregationRequest();
                 }
 
                 disconnectFromDB();
@@ -482,7 +505,7 @@
         || isset($_POST['insertSubmit']) || isset($_POST['selectionSubmit']) 
         || isset($_POST['projectionSubmit']) || isset($_POST['deleteSubmit']) || isset($_POST['joinSubmit'])) {
             handlePOSTRequest();
-        } else if (isset($_GET['aggregateTupleRequest']) || isset($_GET['displayTupleRequest'])  || isset($_GET['divisionSubmit'])  || isset($_GET['aggregateHavingSubmit'])) {
+        } else if (isset($_GET['aggregateTupleRequest']) || isset($_GET['displayTupleRequest'])  || isset($_GET['divisionSubmit'])  || isset($_GET['aggregateHavingSubmit'])  || isset($_GET['nestedAggregationSubmit'])) {
             handleGETRequest();
         }
 		?>
